@@ -1,0 +1,1 @@
+This is a responsive E-Commerce Shoes Website built using HTML, CSS, and JavaScript. It allows users to browse, filter, and view details of different shoes. The website simulates a shopping cart experience and provides a clean, modern interface for online shoe shopping.
