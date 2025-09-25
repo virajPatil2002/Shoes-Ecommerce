@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Payment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background: #f7f7f7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+      border-radius: 12px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .item img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .item-details h4 {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .item-details p {
+      font-weight: 500;
+      color: #555;
+    }
+
+    .payment-methods .form-check {
+      margin-bottom: 10px;
+    }
+
+    #card-fields,
+    #upi-fields,
+    #netbanking-fields {
+      display: none;
+    }
+
+    .btn-cancel {
+      background-color: #dc3545;
+      border: none;
+      font-weight: 600;
+    }
+
+    .btn-cancel:hover {
+      background-color: #b02a37;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+      color: #fff;
+    }
+
+    /* Truck animation */
+    .truck {
+      font-size: 5rem;
+      position: relative;
+      animation: drive 4s linear forwards;
+    }
+
+    @keyframes drive {
+      0% {
+        left: -200px;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+    }
+
+    h5.section-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container py-5">
+    <h2 class="text-center mb-4">Checkout Payment</h2>
+    <div class="card shadow p-4">
+      <!-- Product Info -->
+      <div class="item d-flex gap-3 mb-4 align-items-center">
+        <img id="item-img" src="https://via.placeholder.com/150" alt="Selected Item">
+        <div class="item-details">
+          <h4 id="item-name">Product Name</h4>
+          <p id="item-price">Price: ₹0</p>
+        </div>
+      </div>
+
+      <!-- Payment Form -->
+      <form id="payment-form">
+        <!-- Personal Info -->
+        <div class="form-section">
+          <h5 class="section-title">Personal Information</h5>
+          <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+          </div>
+        </div>
+
+        <!-- Delivery Address -->
+        <div class="form-section">
+          <h5 class="section-title">Delivery Address</h5>
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <textarea id="address" class="form-control" rows="2" placeholder="123 Street, City, State, PIN" required></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="city" class="form-label">City</label>
+              <input type="text" id="city" class="form-control" placeholder="City" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="state" class="form-label">State</label>
+              <input type="text" id="state" class="form-control" placeholder="State" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="zip" class="form-label">PIN Code</label>
+            <input type="text" id="zip" class="form-control" placeholder="123456" required>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="form-section">
+          <h5 class="section-title">Payment Method</h5>
+          <div class="payment-methods mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="cardOption" value="card" checked>
+              <label class="form-check-label" for="cardOption"><i class="fas fa-credit-card me-1"></i> Credit/Debit Card</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="upiOption" value="upi">
+              <label class="form-check-label" for="upiOption"><i class="fas fa-mobile-alt me-1"></i> UPI</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="netbankingOption" value="netbanking">
+              <label class="form-check-label" for="netbankingOption"><i class="fas fa-university me-1"></i> Netbanking</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="codOption" value="cod">
+              <label class="form-check-label" for="codOption"><i class="fas fa-money-bill-wave me-1"></i> Cash on Delivery</label>
+            </div>
+          </div>
+
+          <!-- Card Fields -->
+          <div id="card-fields">
+            <div class="mb-3">
+              <label for="card" class="form-label">Card Number</label>
+              <input type="text" id="card" class="form-control" placeholder="1234 5678 9012 3456">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="exp" class="form-label">Expiry Date</label>
+                <input type="text" id="exp" class="form-control" placeholder="MM/YY">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="cvv" class="form-label">CVV</label>
+                <input type="password" id="cvv" class="form-control" placeholder="123">
+              </div>
+            </div>
+          </div>
+
+          <!-- UPI Fields -->
+          <div id="upi-fields">
+            <div class="mb-3">
+              <label for="upi-id" class="form-label">UPI ID</label>
+              <input type="text" id="upi-id" class="form-control" placeholder="example@upi">
+            </div>
+          </div>
+
+          <!-- Netbanking Fields -->
+          <div id="netbanking-fields">
+            <div class="mb-3">
+              <label for="bank" class="form-label">Bank Account / IFSC</label>
+              <input type="text" id="bank" class="form-control" placeholder="Bank Account or IFSC code">
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-success flex-fill">Pay Now</button>
+          <button type="button" id="cancel-btn" class="btn btn-cancel flex-fill">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay">
+    <i class="fas fa-truck truck"></i>
+    <h4>Processing Payment...</h4>
+    <p>Your order is on its way!</p>
+  </div>
+
+  <script>
+    // Load selected product
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let product = cart[cart.length - 1] || { name: "No product selected", price: 0, image: "https://via.placeholder.com/150" };
+    document.getElementById('item-img').src = product.image;
+    document.getElementById('item-name').textContent = product.name;
+    document.getElementById('item-price').textContent = `Price: ₹${product.price}`;
+
+    // Payment method toggle
+    const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+    const cardFields = document.getElementById('card-fields');
+    const upiFields = document.getElementById('upi-fields');
+    const netbankFields = document.getElementById('netbanking-fields');
+
+    function updatePaymentFields() {
+      const selected = document.querySelector('input[name="paymentMethod"]:checked').value;
+      cardFields.style.display = selected === 'card' ? 'block' : 'none';
+      upiFields.style.display = selected === 'upi' ? 'block' : 'none';
+      netbankFields.style.display = selected === 'netbanking' ? 'block' : 'none';
+    }
+
+    paymentRadios.forEach(r => r.addEventListener('change', updatePaymentFields));
+    updatePaymentFields();
+
+    // Form submit
+    const form = document.getElementById('payment-form');
+    const overlay = document.getElementById('overlay');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const fullName = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const state = document.getElementById('state').value.trim();
+      const zip = document.getElementById('zip').value.trim();
+      const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+      if (!fullName || !email || !address || !city || !state || !zip) {
+        alert("Please fill all required fields.");
+        return;
+      }
+
+      if (selectedMethod === 'card') {
+        const c = document.getElementById('card').value.trim(),
+          e1 = document.getElementById('exp').value.trim(),
+          cvv = document.getElementById('cvv').value.trim();
+        if (!c || !e1 || !cvv) { alert("Please fill all card details."); return; }
+      }
+      if (selectedMethod === 'upi' && !document.getElementById('upi-id').value.trim()) {
+        alert("Please enter your UPI ID."); return;
+      }
+      if (selectedMethod === 'netbanking' && !document.getElementById('bank').value.trim()) {
+        alert("Please enter bank account or IFSC."); return;
+      }
+
+      // Save order
+      let orders = JSON.parse(localStorage.getItem('orders')) || [];
+      orders.push({ name: product.name, price: product.price, img: product.image, paymentMethod: selectedMethod, fullName, email, address, city, state, zip, date: new Date().toLocaleString() });
+      localStorage.setItem('orders', JSON.stringify(orders));
+
+      // Show truck animation
+      form.style.display = 'none';
+      overlay.style.display = 'flex';
+
+      // Redirect after 4s
+      setTimeout(() => window.location.href = 'place.html', 4000);
+    });
+
+    document.getElementById('cancel-btn').addEventListener('click', () => window.location.href = 'products.html');
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

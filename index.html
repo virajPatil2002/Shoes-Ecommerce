@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg rounded shadow" style="background: linear-gradient(90deg, #6a11cb, #2575fc);
+">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold text-white" href="#">Vshoestore</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+          aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active text-white" href="./index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="./product.html">Product</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="./about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="./contact.html">Contact</a>
+            </li>
+
+
+          </ul>
+
+        <div class="mx-3 d-none d-md-block">
+  <i class="fa-solid fa-magnifying-glass fs-5 text-white" id="searchIcon" style="cursor:pointer;"></i>
+</div>
+
+<input 
+  type="text" 
+  id="searchInput" 
+  class="form-control mt-2 d-none d-md-block" 
+  placeholder="Search here..." 
+  style="display:none; max-width:250px;"
+>
+
+
+<div class="dropdown position-relative mx-3 d-none d-md-block">
+  <a 
+    href="#" 
+    id="cartDropdownToggle"
+    class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
+    data-bs-toggle="dropdown" 
+    aria-expanded="false"
+  >
+    <i class="fa-solid fa-cart-shopping fs-5"></i>
+    <span 
+      class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill" 
+      id="cartCount"
+    >2</span>
+  </a>
+
+  <ul class="dropdown-menu dropdown-menu-end text-small p-3" id="cartDropdownMenu" style="min-width: 300px;">
+    <h6 class="dropdown-header">Your Orders</h6>
+    <div id="cartDropdownItems"></div>
+    <div class="mt-2">
+      <a href="order.html" class="btn btn-primary w-100">View All Orders</a>
+    </div>
+  </ul>
+</div>
+
+
+            <div class="dropdown" id="profile-container" style="display: none;">
+              <a href="#" id="profileDropdown"
+                class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-regular fa-user fs-5"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end text-small">
+                <li>
+                  <h6 class="dropdown-header" id="user-name">Guest</h6>
+                </li>
+                <li><a class="dropdown-item" href="#">My Profile</a></li>
+                <li><a class="dropdown-item" href="order.html">Orders</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
+              </ul>
+            </div>
+
+            <a href="./login.html" id="login-link">
+              <button type="button" class="btn btn-danger px-3">
+                Login
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+
+  <script>
+    function show(){
+      let cart=document.getElementById("cart")
+ window.href="order.html";
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginLink = document.getElementById("login-link");
+      const profileContainer = document.getElementById("profile-container");
+      const userNameEl = document.getElementById("user-name");
+
+
+      let loggedInUser = JSON.parse(localStorage.getItem("user"));
+
+      if (loggedInUser) {
+
+        profileContainer.style.display = "block";
+        loginLink.style.display = "none";
+        userNameEl.textContent = `${loggedInUser.firstName} ${loggedInUser.lastName}`;
+      } else {
+
+        profileContainer.style.display = "none";
+        loginLink.style.display = "block";
+      }
+
+
+      const logoutBtn = document.getElementById("logoutBtn");
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.reload();
+      });
+    });
+ const cartCount = document.getElementById("cartCount");
+    const cartDropdownItems = document.getElementById("cartDropdownItems");
+
+    function updateCartDropdown() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cartCount.textContent = cart.length;
+      cartDropdownItems.innerHTML = "";
+
+      if(cart.length === 0){
+        cartDropdownItems.innerHTML = '<p class="text-center mb-0">Cart is empty</p>';
+        return;
+      }
+
+      cart.forEach((item,index)=>{
+        const div = document.createElement("div");
+        div.className = "dropdown-cart-item d-flex align-items-center justify-content-between";
+        div.innerHTML = `
+          <div class="d-flex align-items-center">
+            <img src="${item.image}" width="50" class="me-2 rounded">
+            <div>
+              <h6 class="mb-0">${item.name}</h6>
+              <small>${item.quantity} x $${item.price}</small>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-success me-1">+</button>
+            <button class="btn btn-sm btn-warning me-1">-</button>
+            <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+          </div>
+        `;
+
+        // Increment
+        div.querySelector(".btn-success").addEventListener("click", ()=>{
+          item.quantity +=1;
+          localStorage.setItem("cart",JSON.stringify(cart));
+          updateCartDropdown();
+        });
+
+        // Decrement
+        div.querySelector(".btn-warning").addEventListener("click", ()=>{
+          if(item.quantity>1){
+            item.quantity -=1;
+            localStorage.setItem("cart",JSON.stringify(cart));
+            updateCartDropdown();
+          }
+        });
+
+        // Remove
+        div.querySelector(".btn-danger").addEventListener("click", ()=>{
+          cart.splice(index,1);
+          localStorage.setItem("cart",JSON.stringify(cart));
+          updateCartDropdown();
+        });
+
+        cartDropdownItems.appendChild(div);
+      });
+    }
+
+    // Add to Cart button
+    document.querySelectorAll(".btn-cart").forEach(btn=>{
+      btn.addEventListener("click",e=>{
+        e.preventDefault();
+        const product = e.target.closest(".product-card");
+        const name = product.dataset.name;
+        const price = parseFloat(product.dataset.price);
+        const image = product.dataset.img;
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingItem = cart.find(i=>i.name===name);
+        if(existingItem){
+          existingItem.quantity +=1;
+        }else{
+          cart.push({name,price,image,quantity:1});
+        }
+
+        localStorage.setItem("cart",JSON.stringify(cart));
+        updateCartDropdown();
+        alert(`${name} added to cart`);
+      });
+    });
+
+    // Buy Now button
+    document.querySelectorAll(".btn-buy").forEach(btn=>{
+      btn.addEventListener("click",e=>{
+        e.preventDefault();
+        const product = e.target.closest(".product-card");
+        const name = product.dataset.name;
+        const price = product.dataset.price;
+        const img = product.dataset.img;
+        window.location.href = `payment.html?name=${encodeURIComponent(name)}&price=${price}&img=${encodeURIComponent(img)}`;
+      });
+    });
+
+    updateCartDropdown();
+</script>
+
+  <main>
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active my-2">
+          <a href="./product.html"> <img
+              src="https://assets.woodland.social/new_woodland/landing/carousel_banner_1.webp" class="d-block w-100"
+              alt="..."></a>
+        </div>
+        <div class="carousel-item my-2">
+          <a href="./product.html">
+            <img src="https://png.pngtree.com/background/20250606/original/pngtree-football-player-s-foot-resting-on-colorful-soccer-ball-picture-image_16623620.jpg" class="d-block w-100"
+              alt="..."></a>
+        </div>
+        <div class="carousel-item my-2">
+          <a href="./product.html">
+            <img src="https://images6.alphacoders.com/133/1331511.png"
+              class="d-block w-100" alt="..."></a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <section id="trend" class="py-5">
+    <div class="container">
+      <h1 class="text-center mb-4">Trending</h1>
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-md-4">
+          <a href="./product.html">
+            <img src="./images/s3.webp" class="img-fluid rounded w-100" alt="Trending Product 1"></a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <a href="./product.html">
+            <img src="./images/s5.webp" class="img-fluid rounded w-100" alt="Trending Product 2"></a>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <a href="./product.html">
+            <img src="./images/s4.jfif" class="img-fluid rounded w-100" alt="Trending Product 3"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="Featured">
+    <h1 class="text-center">Latest Product</h1>
+    <div class="container py-5">
+      <div class="row g-4">
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <a href="./product.html"> <img src="./images/b1.jpg" class="card-img-top img-fluid"
+                alt="Downshifter Sports Shoes"></a>
+            <div class="card-body">
+              <h5 class="card-title">Downshifter Sports Shoes</h5>
+              <div class="mb-2 text-warning">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+              </div>
+              <p class="card-text fw-bold">$50.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <a href="./product.html"> <img src="./images/b2.jpg" class="card-img-top img-fluid"
+                alt="Lace-Up Running Shoes"></a>
+            <div class="card-body">
+              <h5 class="card-title">Lace-Up Running Shoes</h5>
+              <div class="mb-2 text-warning">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <p class="card-text fw-bold">$35.00</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <a href="./product.html"> <img src="\./images/b3.jpg" class="card-img-top img-fluid"
+                alt="Lace Fastening Shoes"></a>
+            <div class="card-body">
+              <h5 class="card-title">Lace Fastening Shoes</h5>
+              <div class="mb-2 text-warning">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+              </div>
+              <p class="card-text fw-bold">$15.00</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <img src="./images/b4.jpg" class="card-img-top img-fluid" alt="Flat Lace-Fastening Shoes">
+            <div class="card-body">
+              <h5 class="card-title">Flat Lace-Fastening Shoes</h5>
+              <div class="mb-2 text-warning">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+              </div>
+              <p class="card-text fw-bold">$48.00</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+  <section id="latest">
+    <h1 class="text-center mb-4">Featured Product</h1>
+    <div class="container py-5">
+      <div class="row g-4">
+
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="image-wrapper">
+              <img src="./images/b5.jpg" class="card-img-top" alt="Downshifter Sports Shoes">
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title">Downshifter Sports Shoes</h5>
+                <div class="mb-2 text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <p class="card-text fw-bold">$50.00</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="image-wrapper">
+              <img src="./images/b6.avif" class="card-img-top" alt="Lace-Up Running Shoes">
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title">Lace-Up Running Shoes</h5>
+                <div class="mb-2 text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+              <p class="card-text fw-bold">$35.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="image-wrapper">
+              <img src="./images/b7.webp" class="card-img-top" alt="Lace Fastening Shoes">
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title">Lace Fastening Shoes</h5>
+                <div class="mb-2 text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <p class="card-text fw-bold">$15.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="image-wrapper">
+              <img src="./images/b8.webp" class="card-img-top" alt="Flat Lace-Fastening Shoes">
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title">Flat Lace-Fastening Shoes</h5>
+                <div class="mb-2 text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <p class="card-text fw-bold">$48.00</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </section>
+  <section id="latest">
+
+    <div class="container py-5">
+      <div class="row g-4">
+
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="image-wrapper">
+              <img src="./images/b9.jpg" class="card-img-top" alt="Downshifter Sports Shoes">
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title">Downshifter Sports Shoes</h5>
+                <div class="mb-2 text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <p class="card-text fw-bold">$50.00</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="image-wrapper">
+              <img src="./images/b10.jpg" class="card-img-top" alt="Lace-Up Running Shoes">
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title">Lace-Up Running Shoes</h5>
+                <div class="mb-2 text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+              <p class="card-text fw-bold">$35.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="image-wrapper">
+              <img src="./images/b13.jpg" class="card-img-top" alt="Lace Fastening Shoes">
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title">Lace Fastening Shoes</h5>
+                <div class="mb-2 text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <p class="card-text fw-bold">$15.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="image-wrapper">
+              <img src="./images/b12.avif" class="card-img-top" alt="Flat Lace-Fastening Shoes">
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title">Flat Lace-Fastening Shoes</h5>
+                <div class="mb-2 text-warning">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+              </div>
+              <p class="card-text fw-bold">$48.00</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <section id="banner" class="shadow rounded">
+    <div class="container ">
+      <div class="row align-items-center text-center text-lg-start gy-2">
+
+
+        <div class="col-lg-6">
+          <h6 class="text-uppercase text-white-50 mb-2">New Arrival</h6>
+          <h1 class="display-3 fw-bold mb-3">SALE <span class="text-info">30% OFF</span></h1>
+          <p class="lead mb-4">Limited time offer on all our newest collections. Grab your favorites before they're
+            gone!</p>
+
+          <a href="#" class="btn btn-warning btn-lg px-4 fw-semibold shadow-sm">
+            Shop Now
+          </a>
+
+          <div class="mt-4">
+            <p class="small text-white-50 fs-4">
+              Suitable for any kind of activities.<br>
+              Available in blue and white colors.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-6 text-center">
+          <img src="./images/banner.png" class="img-fluid  " alt="Running Shoes">
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <section class="py-5 bg-light customer">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-4">What Our Customers Say</h2>
+
+      <div id="reviewCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+
+          <div class="carousel-item active">
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="card text-center p-4 border-0 shadow-sm h-100">
+                  <img src="./images/elon.jpg" class="rounded-circle mx-auto small-avatar" alt="Reviewer"
+                    class="w-25 h-25 rounded-circle-sm">
+
+                  <h5 class="mt-3 fw-semibold">Sean Parkar</h5>
+                  <div class="text-warning mb-2">★ ★ ★ ★ ☆</div>
+                  <p class="text-muted">"Amazing experience! Will definitely come back."</p>
+                </div>
+              </div>
+              <div class="col-md-4 d-none d-md-block">
+                <div class="card text-center p-4 border-0 shadow-sm h-100">
+                  <img src="./images/mark.pjpeg" class="rounded-circle mx-auto small-avatar" alt="Reviewer">
+
+                  <h5 class="mt-3 fw-semibold">John Carter</h5>
+                  <div class="text-warning mb-2">★ ★ ★ ★ ★</div>
+                  <p class="text-muted">"Exceptional service and support. Highly recommended."</p>
+                </div>
+              </div>
+              <div class="col-md-4 d-none d-lg-block">
+                <div class="card text-center p-4 border-0 shadow-sm h-100">
+                  <img src="./images/sunder.jpg" class="rounded-circle mx-auto small-avatar" alt="Reviewer">
+                  <h5 class="mt-3 fw-semibold">Mabel Joe</h5>
+                  <div class="text-warning mb-2">★ ★ ★ ★ ☆</div>
+                  <p class="text-muted">"Loved it. The experience was smooth and delightful."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="card text-center p-4 border-0 shadow-sm h-100">
+                  <img src="./images/mark.jfif" class="rounded-circle mx-auto" width="70" alt="Reviewer">
+                  <h5 class="mt-3 fw-semibold">David Ross</h5>
+                  <div class="text-warning mb-2">★ ★ ★ ★ ☆</div>
+                  <p class="text-muted">"Very user-friendly and easy to navigate."</p>
+                </div>
+              </div>
+              <div class="col-md-4 d-none d-md-block">
+                <div class="card text-center p-4 border-0 shadow-sm h-100">
+                  <img src="./images/elon.jpg" class="rounded-circle mx-auto" width="70" alt="Reviewer">
+                  <h5 class="mt-3 fw-semibold">Linda White</h5>
+                  <div class="text-warning mb-2">★ ★ ★ ★ ★</div>
+                  <p class="text-muted">"Absolutely love the support and quality."</p>
+                </div>
+              </div>
+              <div class="col-md-4 d-none d-lg-block">
+                <div class="card text-center p-4 border-0 shadow-sm h-100">
+                  <img src="./images/sunder.jpg" class="rounded-circle mx-auto" width="70" alt="Reviewer">
+                  <h5 class="mt-3 fw-semibold">Chris Wayne</h5>
+                  <div class="text-warning mb-2">★ ★ ★ ★ ☆</div>
+                  <p class="text-muted">"Fast delivery and great communication."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-light py-5">
+    <div class="container text-center">
+      <h2 class="mb-4 fw-bold">Trusted by Top Brands</h2>
+      <div class="d-flex justify-content-center align-items-center flex-nowrap  gap-5 px-2">
+        <div class="company-logo ">
+          <img src="./images/resized_c1.png" class="img-fluid grayscale brand-img-small" alt="Godrej Logo" width="350px"
+            height="150px">
+        </div>
+        <div class="company-logo">
+          <img src="./images/resized_c2.png" class="img-fluid grayscale brand-img-small" alt="Oppo Logo" width="350px">
+        </div>
+        <div class="company-logo">
+          <img src="./images/resized_c3.png" class="img-fluid grayscale brand-img-small" alt="CocaCola Logo"
+            width="350px">
+        </div>
+        <div class="company-logo">
+          <img src="./images/resized_c4.png" class="img-fluid grayscale brand-img-small" alt="PayPal Logo"
+            width="350px">
+        </div>
+        <div class="company-logo">
+          <img src="./images/c6.jfif" class="img-fluid grayscale brand-img-small" alt="Philips Logo" width="350px">
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="bg-dark text-light pt-5 pb-4">
+    <div class="container">
+      <div class="row gy-4">
+
+        <div class="col-md-4">
+          <h5 class="fw-bold mb-3">BrandName</h5>
+          <p class="small text-secondary">
+            Your one-stop shop for premium quality shoes.
+            Delivering comfort, style, and performance since 2025.
+          </p>
+          <div class="d-flex gap-3">
+            <a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-light"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+
+        <div class="col-md-2">
+          <h6 class="fw-bold mb-3">Quick Links</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-secondary text-decoration-none">Home</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none">Shop</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none">About</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3">
+          <h6 class="fw-bold mb-3">Customer Service</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-secondary text-decoration-none">FAQ</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none">Returns</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none">Shipping Info</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none">Terms & Conditions</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3">
+          <h6 class="fw-bold mb-3">Get In Touch</h6>
+          <p class="small mb-1"><i class="fas fa-map-marker-alt me-2"></i> 123 Street, Mumbai, India</p>
+          <p class="small mb-1"><i class="fas fa-phone me-2"></i> +91 98765 43210</p>
+          <p class="small"><i class="fas fa-envelope me-2"></i> support@brandname.com</p>
+        </div>
+
+      </div>
+
+      <hr class="border-secondary mt-4">
+
+      <div class="text-center small text-secondary">
+        © 2025 BrandName. All rights reserved.
+      </div>
+    </div>
+  </footer>
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

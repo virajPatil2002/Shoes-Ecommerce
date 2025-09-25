@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shoe Store - Product Details</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+    .product-main-img {
+      width: 100%;
+      max-width: 450px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .size-btn {
+      margin: 5px;
+      padding: 8px 14px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #fff;
+      transition: all 0.3s ease;
+    }
+    .size-btn:hover {
+      background-color: #f1f1f1;
+    }
+    .size-btn.active {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+    .btn-cart {
+      background: #007bff;
+      color: #fff;
+      border-radius: 30px;
+      padding: 0.6rem 1.4rem;
+      font-weight: 600;
+      border: none;
+    }
+    .btn-cart:hover {
+      background: #0056b3;
+    }
+    .btn-buy {
+      background: #28a745;
+      color: #fff;
+      border-radius: 30px;
+      padding: 0.6rem 1.4rem;
+      font-weight: 600;
+      border: none;
+    }
+    .btn-buy:hover {
+      background: #1e7e34;
+    }
+
+    /* Cart icon top right */
+    .cart-icon {
+      position: fixed;
+      top: 20px;
+      right: 25px;
+      background: #007bff;
+      color: #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      z-index: 1000;
+    }
+
+    /* Flying animation image */
+    .flying-img {
+      position: fixed;
+      z-index: 9999;
+      transition: all 1s ease-in-out;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cart Icon -->
+<div class="cart-icon" id="cartIcon">
+  <i class="fa fa-shopping-cart"></i>
+</div>
+
+<div class="container py-5">
+  <div class="mb-4">
+    <a href="index.html" class="btn btn-secondary">
+      <i class="fa fa-arrow-left me-2"></i>Back to Home
+    </a>
+  </div>
+
+  <div class="row g-5 align-items-center">
+    <div class="col-md-6 text-center">
+      <img id="mainImage" src="" alt="Product" class="product-main-img mb-3">
+    </div>
+
+    <div class="col-md-6">
+      <h2 id="productName" class="fw-bold"></h2>
+      <h4 id="productPrice" class="text-primary mb-3"></h4>
+
+      <h6 class="fw-bold">Select Size</h6>
+      <div class="mb-3">
+        <button class="size-btn" onclick="selectSize(this)">6</button>
+        <button class="size-btn" onclick="selectSize(this)">7</button>
+        <button class="size-btn" onclick="selectSize(this)">8</button>
+        <button class="size-btn" onclick="selectSize(this)">9</button>
+        <button class="size-btn" onclick="selectSize(this)">10</button>
+      </div>
+
+      <div class="d-flex gap-3 mt-4">
+        <button class="btn-cart" id="addToCartBtn">
+          <i class="fa fa-cart-plus me-2"></i>Add to Cart
+        </button>
+        <button class="btn-buy" id="buyNowBtn">
+          <i class="fa fa-bolt me-2"></i>Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let selectedSize = null;
+
+  // Fetch URL params for dynamic product info
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get('name') || 'Product Name';
+  const price = params.get('price') || '0';
+  const img = params.get('img') || 'https://via.placeholder.com/450';
+
+  document.getElementById('mainImage').src = img;
+  document.getElementById('productName').textContent = name;
+  document.getElementById('productPrice').textContent = '$' + price;
+
+  // Size select function
+  function selectSize(btn) {
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedSize = btn.textContent;
+  }
+
+  // Add to cart button
+  document.getElementById('addToCartBtn').addEventListener('click', () => {
+    if (!selectedSize) {
+      alert("Please select a size before adding to cart!");
+      return;
+    }
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push({
+      name: name + ' (Size ' + selectedSize + ')',
+      price: price,
+      image: img,
+      quantity: 1
+    });
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    flyToCart(document.getElementById('mainImage'));
+  });
+
+  // Buy now button
+  document.getElementById('buyNowBtn').addEventListener('click', () => {
+    if (!selectedSize) {
+      alert("Please select a size before buying!");
+      return;
+    }
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push({
+      name: name + ' (Size ' + selectedSize + ')',
+      price: price,
+      image: img,
+      quantity: 1
+    });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    window.location.href = "./payment.html";
+  });
+
+  // Flying animation function
+  function flyToCart(image) {
+    const cartIcon = document.getElementById('cartIcon');
+    const imgClone = image.cloneNode(true);
+    imgClone.classList.add('flying-img');
+
+    const imgRect = image.getBoundingClientRect();
+    imgClone.style.left = imgRect.left + 'px';
+    imgClone.style.top = imgRect.top + 'px';
+    imgClone.style.width = image.offsetWidth + 'px';
+    imgClone.style.height = image.offsetHeight + 'px';
+
+    document.body.appendChild(imgClone);
+
+    const cartRect = cartIcon.getBoundingClientRect();
+    setTimeout(() => {
+      imgClone.style.left = cartRect.left + 'px';
+      imgClone.style.top = cartRect.top + 'px';
+      imgClone.style.width = '20px';
+      imgClone.style.height = '20px';
+      imgClone.style.opacity = '0.5';
+    }, 100);
+
+    setTimeout(() => {
+      imgClone.remove();
+      alert("Product added to cart!");
+    }, 1100);
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

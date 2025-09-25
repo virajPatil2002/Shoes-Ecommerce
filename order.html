@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Orders - Vshoestore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+</head>
+<body>
+<div class="container py-5">
+  <h2 class="mb-4 text-center">Your Cart</h2>
+
+  <!-- Back to Home Button -->
+  <div class="mb-4 text-center">
+    <a href="index.html" class="btn btn-secondary"><i class="fa fa-home"></i> Back to Home</a>
+  </div>
+
+  <div id="orderList"></div>
+
+  <div class="card p-3 mt-3">
+    <h5>Order Summary</h5>
+    <p>Total Items: <span id="totalItems">0</span></p>
+    <p>Total Price: $<span id="totalPrice">0.00</span></p>
+    <button class="btn btn-success w-100" id="checkoutBtn">Proceed to Payment</button>
+  </div>
+</div>
+
+<script>
+  const orderList = document.getElementById("orderList");
+  const totalItemsEl = document.getElementById("totalItems");
+  const totalPriceEl = document.getElementById("totalPrice");
+  const checkoutBtn = document.getElementById("checkoutBtn");
+
+  function renderOrders(){
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    orderList.innerHTML = "";
+    if(cart.length===0){
+      orderList.innerHTML='<p class="text-center">Cart is empty</p>';
+      totalItemsEl.textContent=0;
+      totalPriceEl.textContent="0.00";
+      return;
+    }
+
+    let totalItems=0;
+    let totalPrice=0;
+
+    cart.forEach((item,index)=>{
+      totalItems += item.quantity;
+      totalPrice += item.quantity*item.price;
+
+      const div = document.createElement("div");
+      div.className="d-flex align-items-center justify-content-between mb-2 p-2 border rounded";
+      div.innerHTML=`
+        <div class="d-flex align-items-center">
+          <img src="${item.image}" width="60" class="rounded me-2">
+          <div>
+            <h6 class="mb-1">${item.name}</h6>
+            <small>${item.quantity} x $${item.price}</small>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-success me-1">+</button>
+          <button class="btn btn-sm btn-warning me-1">-</button>
+          <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+        </div>
+      `;
+
+      div.querySelector(".btn-success").addEventListener("click",()=>{
+        item.quantity +=1;
+        localStorage.setItem("cart",JSON.stringify(cart));
+        renderOrders();
+      });
+
+      div.querySelector(".btn-warning").addEventListener("click",()=>{
+        if(item.quantity>1){
+          item.quantity -=1;
+          localStorage.setItem("cart",JSON.stringify(cart));
+          renderOrders();
+        }
+      });
+
+      div.querySelector(".btn-danger").addEventListener("click",()=>{
+        cart.splice(index,1);
+        localStorage.setItem("cart",JSON.stringify(cart));
+        renderOrders();
+      });
+
+      orderList.appendChild(div);
+    });
+
+    totalItemsEl.textContent = totalItems;
+    totalPriceEl.textContent = totalPrice.toFixed(2);
+  }
+
+  checkoutBtn.addEventListener("click",()=>{
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if(cart.length===0){ alert("Cart is empty"); return; }
+    window.location.href="payment.html";
+  });
+
+  renderOrders();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

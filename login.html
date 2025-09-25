@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login & Registration</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;}
+  body{background:linear-gradient(135deg,#6a11cb,#2575fc);display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;}
+  .container{width:420px;background:rgba(255,255,255,0.95);border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,0.25);padding:30px;animation:fadeIn .5s ease;}
+  .tabs{display:flex;justify-content:space-between;margin-bottom:25px;border-bottom:2px solid #eee;}
+  .tab-btn{flex:1;text-align:center;padding:12px 0;cursor:pointer;font-weight:600;color:#555;transition:.3s;}
+  .tab-btn.active{color:#2575fc;border-bottom:3px solid #2575fc;}
+  h2{text-align:center;margin-bottom:22px;color:#222;font-weight:700;font-size:22px;}
+  .input-group{position:relative;margin-bottom:16px;}
+  .input-group input{width:100%;padding:12px 12px 12px 40px;border:1px solid #ddd;border-radius:8px;font-size:14px;transition:.3s;}
+  .input-group input:focus{outline:none;border-color:#2575fc;box-shadow:0 0 6px rgba(37,117,252,0.3);}
+  .input-group i{position:absolute;top:50%;left:12px;transform:translateY(-50%);color:#999;}
+  button{width:100%;padding:12px;margin-top:8px;border:none;background:#2575fc;color:#fff;font-size:16px;font-weight:600;border-radius:8px;cursor:pointer;transition:.3s;}
+  button:hover{background:#1a5dd6;}
+  .error-msg{color:red;font-size:13px;display:none;margin-bottom:6px;}
+  .forms{position:relative;overflow:hidden;}
+  form{display:none;animation:fadeSlide .4s ease forwards;}
+  form.active{display:block;}
+  .toggle-link{text-align:center;margin-top:12px;font-size:14px;}
+  .toggle-link a{color:#2575fc;cursor:pointer;text-decoration:none;font-weight:600;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-15px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeSlide{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+  @media (max-width:450px){.container{width:100%;padding:20px;}}
+</style>
+<script src="https://kit.fontawesome.com/2d323a629b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+  <div class="tabs">
+    <div class="tab-btn active" onclick="showTab('login')">Login</div>
+    <div class="tab-btn" onclick="showTab('register')">Register</div>
+  </div>
+  <div class="forms">
+    <form id="loginForm" class="active">
+      <h2>Welcome Back</h2>
+      <div class="input-group">
+        <i class="fas fa-user-circle"></i>
+        <input type="text" id="loginUsername" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+      </div>
+      <p class="error-msg" id="loginError">⚠ Invalid username or password</p>
+      <button type="button" onclick="loginUser()">Login</button>
+      <div class="toggle-link">Don't have an account? <a onclick="showTab('register')">Register</a></div>
+    </form>
+    <form id="registerForm">
+      <h2>Create Account</h2>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="regFirstName" placeholder="First Name" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="regLastName" placeholder="Last Name" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-user-circle"></i>
+        <input type="text" id="regUsername" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="regPassword" placeholder="Password" required>
+      </div>
+      <p class="error-msg" id="regError">⚠ Please fill all fields</p>
+      <button type="button" onclick="registerUser()">Register</button>
+      <div class="toggle-link">Already registered? <a onclick="showTab('login')">Login</a></div>
+    </form>
+  </div>
+</div>
+<script>
+  function showTab(tab){
+    document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.remove('active'));
+    if(tab==='login')document.querySelectorAll('.tab-btn')[0].classList.add('active');
+    else document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    document.getElementById('loginForm').classList.remove('active');
+    document.getElementById('registerForm').classList.remove('active');
+    if(tab==='login')document.getElementById('loginForm').classList.add('active');
+    else document.getElementById('registerForm').classList.add('active');
+  }
+  function registerUser(){
+    let firstName=document.getElementById("regFirstName").value.trim();
+    let lastName=document.getElementById("regLastName").value.trim();
+    let username=document.getElementById("regUsername").value.trim();
+    let password=document.getElementById("regPassword").value.trim();
+    if(!firstName||!lastName||!username||!password){document.getElementById("regError").style.display="block";return;}
+    document.getElementById("regError").style.display="none";
+    let existingUser=localStorage.getItem("user");
+    if(existingUser){
+      alert("User already registered. Please login.");
+      showTab('login');
+      return;
+    }
+    let userData={firstName,lastName,username,password};
+    localStorage.setItem("user",JSON.stringify(userData));
+    alert("Registration successful! Please login.");
+    showTab('login');
+  }
+  function loginUser(){
+    let username=document.getElementById("loginUsername").value.trim();
+    let password=document.getElementById("loginPassword").value.trim();
+    let loginError=document.getElementById("loginError");
+    let user=localStorage.getItem("user");
+    if(user){
+      let parsedUser=JSON.parse(user);
+      if(parsedUser.username===username&&parsedUser.password===password){
+        loginError.style.display="none";
+        alert("Login successful!");
+        window.location.href="index.html";
+      }else loginError.style.display="block";
+    }else alert("No registered user found. Please register first.");
+  }
+</script>
+</body>
+</html>

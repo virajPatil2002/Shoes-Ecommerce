@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shoe Store - Product Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #2c3e50
+    }
+
+    header {
+      color: black;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2)
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      user-select: none;
+      margin: 0
+    }
+
+    .card {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100%
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 38px rgba(0, 0, 0, 0.15)
+    }
+
+    .card img {
+      height: 260px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      border-bottom: 1px solid #eee
+    }
+
+    .card:hover img {
+      transform: scale(1.08)
+    }
+
+    .card-body {
+      flex-grow: 1;
+      padding: 1.6rem 1.4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #203a43;
+      margin-bottom: 0.75rem;
+      user-select: none;
+      min-height: 3rem
+    }
+
+    .text-warning {
+      font-size: 1.15rem;
+      color: #f5b50a
+    }
+
+    .price {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #2a81ea;
+      margin-bottom: 1rem;
+      user-select: none
+    }
+
+    .btn-primary {
+      border-radius: 30px;
+      padding: 0.55rem 1.4rem;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      color: #fff;
+      transition: background 0.4s ease, box-shadow 0.3s ease;
+      user-select: none
+    }
+
+    .btn-cart {
+      background: #007bff
+    }
+
+    .btn-cart:hover {
+      background: #0056b3
+    }
+
+    .btn-buy {
+      background: #28a745
+    }
+
+    .btn-buy:hover {
+      background: #1e7e34
+    }
+
+    @media (max-width:576px) {
+      header h1 {
+        font-size: 1.3rem
+      }
+
+      .card img {
+        height: 220px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg rounded shadow" style="background: linear-gradient(90deg, #6a11cb, #2575fc);
+">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold text-white" href="#">Vshoestore</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+          aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active text-white" href="./index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="./product.html">Product</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="./about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="./contact.html">Contact</a>
+            </li>
+
+
+          </ul>
+
+        <div class="mx-3 d-none d-md-block">
+  <i class="fa-solid fa-magnifying-glass fs-5 text-white" id="searchIcon" style="cursor:pointer;"></i>
+</div>
+
+<input 
+  type="text" 
+  id="searchInput" 
+  class="form-control mt-2 d-none d-md-block" 
+  placeholder="Search here..." 
+  style="display:none; max-width:250px;"
+>
+
+
+<div class="dropdown position-relative mx-3 d-none d-md-block">
+  <a 
+    href="#" 
+    id="cartDropdownToggle"
+    class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
+    data-bs-toggle="dropdown" 
+    aria-expanded="false"
+  >
+    <i class="fa-solid fa-cart-shopping fs-5"></i>
+    <span 
+      class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill" 
+      id="cartCount"
+    >2</span>
+  </a>
+
+  <ul class="dropdown-menu dropdown-menu-end text-small p-3" id="cartDropdownMenu" style="min-width: 300px;">
+    <h6 class="dropdown-header">Your Orders</h6>
+    <div id="cartDropdownItems"></div>
+    <div class="mt-2">
+      <a href="order.html" class="btn btn-primary w-100">View All Orders</a>
+    </div>
+  </ul>
+</div>
+
+
+            <div class="dropdown" id="profile-container" style="display: none;">
+              <a href="#" id="profileDropdown"
+                class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-regular fa-user fs-5"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end text-small">
+                <li>
+                  <h6 class="dropdown-header" id="user-name">Guest</h6>
+                </li>
+                <li><a class="dropdown-item" href="#">My Profile</a></li>
+                <li><a class="dropdown-item" href="order.html">Orders</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
+              </ul>
+            </div>
+
+            <a href="./login.html" id="login-link">
+              <button type="button" class="btn btn-danger px-3">
+                Login
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginLink = document.getElementById("login-link");
+      const profileContainer = document.getElementById("profile-container");
+      const userNameEl = document.getElementById("user-name");
+
+
+      let loggedInUser = JSON.parse(localStorage.getItem("user"));
+
+      if (loggedInUser) {
+
+        profileContainer.style.display = "block";
+        loginLink.style.display = "none";
+        userNameEl.textContent = `${loggedInUser.firstName} ${loggedInUser.lastName}`;
+      } else {
+
+        profileContainer.style.display = "none";
+        loginLink.style.display = "block";
+      }
+
+
+      const logoutBtn = document.getElementById("logoutBtn");
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.reload();
+      });
+    });
+    
+  </script>
+
+  <div class="container py-5">
+    <div class="row">
+
+      <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+          <h5 class="fw-bold mb-3">Filter Shoes</h5>
+          <div class="mb-3">
+            <label class="form-label">Search</label>
+            <input type="text" id="filterSearchInput" class="form-control" placeholder="Search shoes...">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select id="categoryFilter" class="form-select">
+              <option value="">All</option>
+              <option value="sports">Sports</option>
+              <option value="running">Running</option>
+              <option value="casual">Casual</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Brand</label>
+            <select id="brandFilter" class="form-select">
+              <option value="">All</option>
+              <option value="nike">Nike</option>
+              <option value="adidas">Adidas</option>
+              <option value="puma">Puma</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Price Range</label>
+            <input type="range" id="priceFilter" class="form-range" min="0" max="100" step="5" value="100">
+            <span id="priceValue" class="fw-semibold">Up to $100</span>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Rating</label>
+            <select id="ratingFilter" class="form-select">
+              <option value="">All</option>
+              <option value="4">4 ★ & above</option>
+              <option value="3">3 ★ & above</option>
+              <option value="2">2 ★ & above</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="row g-4" id="productList">
+
+          <div class="col-md-4 product-card" data-name="Downshifter Sports Shoes" data-category="sports"
+            data-brand="nike" data-price="50" data-rating="4" data-img="./images/b1.jpg">
+            <div class="card h-100 shadow-sm">
+              <img src="./images/b1.jpg" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Downshifter Sports Shoes</h5>
+                <p class="fw-bold">$50.00</p>
+                <div class="text-warning">★★★★☆</div>
+                <a href="#" class="btn btn-primary btn-cart w-100 my-2"><i class="fa fa-cart-plus"></i> Add to Cart</a>
+                <a href="#" class="btn btn-primary btn-buy w-100"><i class="fa fa-bolt"></i> Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 product-card" data-name="Lace-Up Running Shoes" data-category="running"
+            data-brand="adidas" data-price="35" data-rating="5" data-img="./images/b2.jpg">
+            <div class="card h-100 shadow-sm">
+              <img src="./images/b9.jpg" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Lace-Up Running Shoes</h5>
+                <p class="fw-bold">$35.00</p>
+                <div class="text-warning">★★★★★</div>
+                <a href="#" class="btn btn-primary btn-cart w-100 my-2"><i class="fa fa-cart-plus"></i> Add to Cart</a>
+                <a href="#" class="btn btn-primary btn-buy w-100"><i class="fa fa-bolt"></i> Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 product-card" data-name="Classic Casual Sneakers" data-category="casual"
+            data-brand="puma" data-price="55" data-rating="3" data-img="./images/b7.webp">
+            <div class="card h-100 shadow-sm">
+              <img src="./images/b7.webp" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Classic Casual Sneakers</h5>
+                <p class="fw-bold">$55.00</p>
+                <div class="text-warning">★★★☆☆</div>
+                <a href="#" class="btn btn-primary btn-cart w-100 my-2"><i class="fa fa-cart-plus"></i> Add to Cart</a>
+                <a href="#" class="btn btn-primary btn-buy w-100"><i class="fa fa-bolt"></i> Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 product-card" data-name="Trail Running Shoes" data-category="running" data-brand="nike"
+            data-price="65" data-rating="5" data-img="./images/b8.jpg">
+            <div class="card h-100 shadow-sm">
+              <img src="./images/b8.jpg" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Trail Running Shoes</h5>
+                <p class="fw-bold">$65.00</p>
+                <div class="text-warning">★★★★★</div>
+                <a href="#" class="btn btn-primary btn-cart w-100 my-2"><i class="fa fa-cart-plus"></i> Add to Cart</a>
+                <a href="#" class="btn btn-primary btn-buy w-100"><i class="fa fa-bolt"></i> Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 product-card" data-name="Street Casual Sneakers" data-category="casual" data-brand="puma"
+            data-price="45" data-rating="4" data-img="./images/cart1.jpg">
+            <div class="card h-100 shadow-sm">
+              <img src="./images/ban3.png" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Street Casual Sneakers</h5>
+                <p class="fw-bold">$45.00</p>
+                <div class="text-warning">★★★★☆</div>
+                <a href="#" class="btn btn-primary btn-cart w-100 my-2"><i class="fa fa-cart-plus"></i> Add to Cart</a>
+                <a href="#" class="btn btn-primary btn-buy w-100"><i class="fa fa-bolt"></i> Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 product-card" data-name="Street Casual Sneakers" data-category="casual" data-brand="puma"
+     data-price="45" data-rating="4" data-img="./images/cart1.jpg">
+  <div class="card h-100 shadow-sm">
+    <img src="./images/b8.jpg" class="card-img-top">
+    <div class="card-body">
+      <h5 class="card-title">Street Casual Sneakers</h5>
+      <p class="fw-bold">$45.00</p>
+      <div class="text-warning">★★★★☆</div>
+      <a href="#" class="btn btn-primary btn-cart w-100 my-2"><i class="fa fa-cart-plus"></i> Add to Cart</a>
+      <a href="#" class="btn btn-primary btn-buy w-100"><i class="fa fa-bolt"></i> Buy Now</a>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4 product-card" data-name="Running Shoes" data-category="sports" data-brand="nike"
+     data-price="60" data-rating="5" data-img="./images/cart2.jpg">
+  <div class="card h-100 shadow-sm">
+    <img src="./images/b12.avif" class="card-img-top">
+    <div class="card-body">
+      <h5 class="card-title">Running Shoes</h5>
+      <p class="fw-bold">$60.00</p>
+      <div class="text-warning">★★★★★</div>
+      <a href="#" class="btn btn-primary btn-cart w-100 my-2"><i class="fa fa-cart-plus"></i> Add to Cart</a>
+      <a href="#" class="btn btn-primary btn-buy w-100"><i class="fa fa-bolt"></i> Buy Now</a>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4 product-card" data-name="Leather Boots" data-category="formal" data-brand="woodland"
+     data-price="85" data-rating="4" data-img="./images/cart3.jpg">
+  <div class="card h-100 shadow-sm">
+    <img src="./images/banner.png" class="card-img-top">
+    <div class="card-body">
+      <h5 class="card-title">Leather Boots</h5>
+      <p class="fw-bold">$85.00</p>
+      <div class="text-warning">★★★★☆</div>
+      <a href="#" class="btn btn-primary btn-cart w-100 my-2"><i class="fa fa-cart-plus"></i> Add to Cart</a>
+      <a href="#" class="btn btn-primary btn-buy w-100"><i class="fa fa-bolt"></i> Buy Now</a>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4 product-card" data-name="Slip-On Sneakers" data-category="casual" data-brand="adidas"
+     data-price="50" data-rating="3" data-img="./images/cart4.jpg">
+  <div class="card h-100 shadow-sm">
+    <img src="./images/b10.jpg" class="card-img-top">
+    <div class="card-body">
+      <h5 class="card-title">Slip-On Sneakers</h5>
+      <p class="fw-bold">$50.00</p>
+      <div class="text-warning">★★★☆☆</div>
+      <a href="#" class="btn btn-primary btn-cart w-100 my-2"><i class="fa fa-cart-plus"></i> Add to Cart</a>
+      <a href="#" class="btn btn-primary btn-buy w-100"><i class="fa fa-bolt"></i> Buy Now</a>
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <script>
+    const searchInput = document.getElementById('filterSearchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const brandFilter = document.getElementById('brandFilter');
+    const priceFilter = document.getElementById('priceFilter');
+    const priceValue = document.getElementById('priceValue');
+    const ratingFilter = document.getElementById('ratingFilter');
+    const productList = document.getElementById('productList');
+    const products = productList.getElementsByClassName('product-card');
+
+  function filterProducts() {
+  const searchText = searchInput.value.toLowerCase().trim();
+  const category = categoryFilter.value;
+  const brand = brandFilter.value;
+  const maxPrice = parseFloat(priceFilter.value) || Infinity;
+  const minRating = parseFloat(ratingFilter.value) || 0;
+
+  priceValue.textContent = maxPrice === Infinity ? 'Any Price' : `Up to $${maxPrice}`;
+
+  Array.from(products).forEach(product => {
+    const name = (product.dataset.name || '').toLowerCase().trim();
+    const productCategory = product.dataset.category;
+    const productBrand = product.dataset.brand;
+    const price = parseFloat(product.dataset.price) || 0;
+    const rating = parseFloat(product.dataset.rating) || 0;
+
+    const matchesSearch = name.includes(searchText);
+    const matchesCategory = !category || productCategory === category;
+    const matchesBrand = !brand || productBrand === brand;
+    const matchesPrice = price <= maxPrice;
+    const matchesRating = rating >= minRating;
+
+    product.style.display = matchesSearch && matchesCategory && matchesBrand && matchesPrice && matchesRating ? '' : 'none';
+  });
+}
+
+    searchInput.addEventListener('input', filterProducts);
+    categoryFilter.addEventListener('change', filterProducts);
+    brandFilter.addEventListener('change', filterProducts);
+    priceFilter.addEventListener('input', filterProducts);
+    ratingFilter.addEventListener('change', filterProducts);
+
+
+    document.querySelectorAll('.btn-buy').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const product = e.target.closest('.product-card');
+        const name = product.dataset.name;
+        const price = product.dataset.price;
+        const img = product.dataset.img;
+        window.location.href = `payment.html?name=${encodeURIComponent(name)}&price=${price}&img=${encodeURIComponent(img)}`;
+      });
+    });
+    document.querySelectorAll('.btn-cart').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const product = e.target.closest('.product-card');
+        const name = product.dataset.name;
+        const price = product.dataset.price;
+        const img = product.dataset.img;
+       
+        window.location.href = `detail.html?name=${encodeURIComponent(name)}&price=${price}&img=${encodeURIComponent(img)}`;
+      });
+    });
+
+    const cartCount = document.getElementById("cartCount");
+    const cartDropdownItems = document.getElementById("cartDropdownItems");
+
+    function updateCartDropdown() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cartCount.textContent = cart.length;
+      cartDropdownItems.innerHTML = "";
+
+      if(cart.length === 0){
+        cartDropdownItems.innerHTML = '<p class="text-center mb-0">Cart is empty</p>';
+        return;
+      }
+
+      cart.forEach((item,index)=>{
+        const div = document.createElement("div");
+        div.className = "dropdown-cart-item d-flex align-items-center justify-content-between";
+        div.innerHTML = `
+          <div class="d-flex align-items-center">
+            <img src="${item.image}" width="50" class="me-2 rounded">
+            <div>
+              <h6 class="mb-0">${item.name}</h6>
+              <small>${item.quantity} x $${item.price}</small>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-success me-1">+</button>
+            <button class="btn btn-sm btn-warning me-1">-</button>
+            <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+          </div>
+        `;
+
+        // Increment
+        div.querySelector(".btn-success").addEventListener("click", ()=>{
+          item.quantity +=1;
+          localStorage.setItem("cart",JSON.stringify(cart));
+          updateCartDropdown();
+        });
+
+        // Decrement
+        div.querySelector(".btn-warning").addEventListener("click", ()=>{
+          if(item.quantity>1){
+            item.quantity -=1;
+            localStorage.setItem("cart",JSON.stringify(cart));
+            updateCartDropdown();
+          }
+        });
+
+        // Remove
+        div.querySelector(".btn-danger").addEventListener("click", ()=>{
+          cart.splice(index,1);
+          localStorage.setItem("cart",JSON.stringify(cart));
+          updateCartDropdown();
+        });
+
+        cartDropdownItems.appendChild(div);
+      });
+    }
+
+    // Add to Cart button
+    document.querySelectorAll(".btn-cart").forEach(btn=>{
+      btn.addEventListener("click",e=>{
+        e.preventDefault();
+        const product = e.target.closest(".product-card");
+        const name = product.dataset.name;
+        const price = parseFloat(product.dataset.price);
+        const image = product.dataset.img;
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingItem = cart.find(i=>i.name===name);
+        if(existingItem){
+          existingItem.quantity +=1;
+        }else{
+          cart.push({name,price,image,quantity:1});
+        }
+
+        localStorage.setItem("cart",JSON.stringify(cart));
+        updateCartDropdown();
+        alert(`${name} added to cart`);
+      });
+    });
+
+    // Buy Now button
+    document.querySelectorAll(".btn-buy").forEach(btn=>{
+      btn.addEventListener("click",e=>{
+        e.preventDefault();
+        const product = e.target.closest(".product-card");
+        const name = product.dataset.name;
+        const price = product.dataset.price;
+        const img = product.dataset.img;
+        window.location.href = `payment.html?name=${encodeURIComponent(name)}&price=${price}&img=${encodeURIComponent(img)}`;
+      });
+    });
+
+    updateCartDropdown();
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
