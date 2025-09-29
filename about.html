@@ -11,55 +11,164 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./css/style.css">
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
 
-    .hero-section {
-      background: linear-gradient(135deg, #7F00FF, #E100FF), url('./images/about-banner.jpg') center/cover no-repeat;
-      color: white;
-      padding: 100px 0;
-    }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background-color: #fefefe;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
 
-    .hero-section h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-    }
 
-    .hero-section p {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.8);
-    }
+.hero-section {
+background: linear-gradient(135deg, #7f00ff, #e100ff);
+  background-blend-mode: overlay;
+  color: #fff;
+  padding: 120px 0;
+  text-align: center;
+}
 
-    .feature-box {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
+.hero-section h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
 
-    .feature-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
+.hero-section p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+}
 
-    .feature-box h5 {
-      font-weight: 700;
-      margin-top: 15px;
-    }
+.about-story img {
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
 
-    .mission-section {
-      background: #f8f9fa;
-      padding: 60px 0;
-    }
+.about-story img:hover {
+  transform: scale(1.05);
+}
 
-    .social-btn {
-      border-radius: 50px;
-      padding: 10px 25px;
-      font-weight: 600;
-    }
+.about-story h2 {
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.about-story p {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+
+.feature-box {
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.feature-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.feature-box img {
+  margin-bottom: 15px;
+}
+
+.feature-box h5 {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.feature-box p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+
+.mission-section {
+  background-color: #f8f9fa;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.mission-section h2 {
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.mission-section p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.mission-section .btn {
+  padding: 12px 35px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.mission-section .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.social-section {
+  background-color: #222;
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.social-section h3 {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.social-section p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 30px;
+}
+
+.social-section i {
+  font-size: 2rem;
+  margin: 0 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.social-section i:hover {
+  color: #6a11cb;
+  transform: scale(1.2);
+}
+
+
+@media (max-width: 991px) {
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .feature-box {
+    padding: 25px 15px;
+  }
+}
+
   </style>
 </head>
 

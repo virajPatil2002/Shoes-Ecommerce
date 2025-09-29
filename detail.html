@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shoe Store - Product Details</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <title>Product Detail - Vshoestore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f8f9fa;
     }
+
     .product-main-img {
       width: 100%;
       max-width: 450px;
       border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
+
     .size-btn {
       margin: 5px;
       padding: 8px 14px;
@@ -26,25 +29,17 @@
       background-color: #fff;
       transition: all 0.3s ease;
     }
+
     .size-btn:hover {
       background-color: #f1f1f1;
     }
+
     .size-btn.active {
       background-color: #007bff;
       color: #fff;
       border-color: #007bff;
     }
-    .btn-cart {
-      background: #007bff;
-      color: #fff;
-      border-radius: 30px;
-      padding: 0.6rem 1.4rem;
-      font-weight: 600;
-      border: none;
-    }
-    .btn-cart:hover {
-      background: #0056b3;
-    }
+
     .btn-buy {
       background: #28a745;
       color: #fff;
@@ -53,11 +48,11 @@
       font-weight: 600;
       border: none;
     }
+
     .btn-buy:hover {
       background: #1e7e34;
     }
 
-    /* Cart icon top right */
     .cart-icon {
       position: fixed;
       top: 20px;
@@ -74,144 +69,291 @@
       z-index: 1000;
     }
 
-    /* Flying animation image */
     .flying-img {
       position: fixed;
       z-index: 9999;
       transition: all 1s ease-in-out;
       pointer-events: none;
     }
+
+    /* ----------------- Animated Button Styles ------------------- */
+    .button {
+      --background: #362A89;
+      --text: #fff;
+      --cart: #fff;
+      --tick: var(--background);
+      position: relative;
+      border: none;
+      background: none;
+      padding: 8px 28px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      text-align: center;
+      min-width: 144px;
+      color: var(--text);
+      background: var(--background);
+      transform: scale(var(--scale, 1));
+      transition: transform .4s cubic-bezier(.36, 1.01, .32, 1.27);
+    }
+
+    .button:active {
+      --scale: .95;
+    }
+
+    .button span {
+      font-size: 14px;
+      font-weight: 500;
+      display: block;
+      position: relative;
+      padding-left: 24px;
+      margin-left: -8px;
+      line-height: 26px;
+      transform: translateY(var(--span-y, 0));
+      transition: transform .7s ease;
+    }
+
+    .button span:before,
+    .button span:after {
+      content: '';
+      width: var(--w, 2px);
+      height: var(--h, 14px);
+      border-radius: 1px;
+      position: absolute;
+      left: var(--l, 8px);
+      top: var(--t, 6px);
+      background: currentColor;
+      transform: scale(.75) rotate(var(--icon-r, 0deg)) translateY(var(--icon-y, 0));
+      transition: transform .65s ease .05s;
+    }
+
+    .button span:after {
+      --w: 14px;
+      --h: 2px;
+      --l: 2px;
+      --t: 12px;
+    }
+
+    .button .cart {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -13px 0 0 -18px;
+      transform-origin: 12px 23px;
+      transform: translateX(-120px) rotate(-18deg);
+    }
+
+    .button .cart:before,
+    .button .cart:after {
+      content: '';
+      position: absolute;
+    }
+
+    .button .cart:before {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 2px var(--cart);
+      bottom: 0;
+      left: 9px;
+      filter: drop-shadow(11px 0 0 var(--cart));
+    }
+
+    .button .cart:after {
+      width: 16px;
+      height: 9px;
+      background: var(--cart);
+      left: 9px;
+      bottom: 7px;
+      transform-origin: 50% 100%;
+      transform: perspective(4px) rotateX(-6deg) scaleY(var(--fill, 0));
+      transition: transform 1.2s ease var(--fill-d);
+    }
+
+    .button .cart svg {
+      z-index: 1;
+      width: 36px;
+      height: 26px;
+      display: block;
+      position: relative;
+      fill: none;
+      stroke: var(--cart);
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .button.loading {
+      --scale: .95;
+      --span-y: -32px;
+      --icon-r: 180deg;
+      --fill: 1;
+      --fill-d: .8s;
+      --offset: 0;
+      --offset-d: 1.73s;
+    }
+
+    .button.loading .cart {
+      animation: cart 3.4s linear forwards .2s;
+    }
+
+    @keyframes cart {
+      12.5% {
+        transform: translateX(-60px) rotate(-18deg);
+      }
+
+      25%,
+      45%,
+      55%,
+      75% {
+        transform: none;
+      }
+
+      50% {
+        transform: scale(.9);
+      }
+
+      44%,
+      56% {
+        transform-origin: 12px 23px;
+      }
+
+      45%,
+      55% {
+        transform-origin: 50% 50%;
+      }
+
+      87.5% {
+        transform: translateX(70px) rotate(-18deg);
+      }
+
+      100% {
+        transform: translateX(140px) rotate(-18deg);
+      }
+    }
   </style>
 </head>
+
 <body>
 
-<!-- Cart Icon -->
-<div class="cart-icon" id="cartIcon">
-  <i class="fa fa-shopping-cart"></i>
-</div>
 
-<div class="container py-5">
-  <div class="mb-4">
-    <a href="index.html" class="btn btn-secondary">
-      <i class="fa fa-arrow-left me-2"></i>Back to Home
-    </a>
+  <div class="cart-icon" id="cartIcon">
+    <i class="fa fa-shopping-cart"></i>
   </div>
 
-  <div class="row g-5 align-items-center">
-    <div class="col-md-6 text-center">
-      <img id="mainImage" src="" alt="Product" class="product-main-img mb-3">
-    </div>
+  <div class="container py-5">
+    <a href="product.html" class="btn btn-secondary mb-4"><i class="fa fa-arrow-left me-2"></i>Back to Products</a>
 
-    <div class="col-md-6">
-      <h2 id="productName" class="fw-bold"></h2>
-      <h4 id="productPrice" class="text-primary mb-3"></h4>
-
-      <h6 class="fw-bold">Select Size</h6>
-      <div class="mb-3">
-        <button class="size-btn" onclick="selectSize(this)">6</button>
-        <button class="size-btn" onclick="selectSize(this)">7</button>
-        <button class="size-btn" onclick="selectSize(this)">8</button>
-        <button class="size-btn" onclick="selectSize(this)">9</button>
-        <button class="size-btn" onclick="selectSize(this)">10</button>
+    <div class="row g-5 align-items-center">
+      <div class="col-md-6 text-center">
+        <img id="mainImage" src="" alt="Product" class="product-main-img mb-3">
       </div>
+      <div class="col-md-6">
+        <h2 id="productName" class="fw-bold"></h2>
+        <h4 id="productPrice" class="text-primary mb-3"></h4>
 
-      <div class="d-flex gap-3 mt-4">
-        <button class="btn-cart" id="addToCartBtn">
-          <i class="fa fa-cart-plus me-2"></i>Add to Cart
-        </button>
-        <button class="btn-buy" id="buyNowBtn">
-          <i class="fa fa-bolt me-2"></i>Buy Now
-        </button>
+        <h6 class="fw-bold">Select Size</h6>
+        <div class="mb-3">
+          <button class="size-btn" onclick="selectSize(this)">6</button>
+          <button class="size-btn" onclick="selectSize(this)">7</button>
+          <button class="size-btn" onclick="selectSize(this)">8</button>
+          <button class="size-btn" onclick="selectSize(this)">9</button>
+          <button class="size-btn" onclick="selectSize(this)">10</button>
+        </div>
+
+        <div class="d-flex gap-3 mt-4">
+         
+          <button class="button" id="addToCartBtn">
+            <span>Add to Cart</span>
+            <div class="cart">
+              <svg viewBox="0 0 36 26">
+                <polyline points="1 1, 6 1, 8 8, 30 8, 34 18, 8 18"></polyline>
+                <polyline points="10 22, 14 26, 26 14"></polyline>
+              </svg>
+            </div>
+          </button>
+
+          <button class="btn-buy" id="buyNowBtn"><i class="fa fa-bolt me-2"></i>Buy Now</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  let selectedSize = null;
+  <script>
+    let selectedSize = null;
 
-  // Fetch URL params for dynamic product info
-  const params = new URLSearchParams(window.location.search);
-  const name = params.get('name') || 'Product Name';
-  const price = params.get('price') || '0';
-  const img = params.get('img') || 'https://via.placeholder.com/450';
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name') || 'Product Name';
+    const price = params.get('price') || '0';
+    const img = params.get('img') || 'https://via.placeholder.com/450x450.png?text=Shoesimages';
 
-  document.getElementById('mainImage').src = img;
-  document.getElementById('productName').textContent = name;
-  document.getElementById('productPrice').textContent = '$' + price;
+    document.getElementById('mainImage').src = img;
+    document.getElementById('productName').textContent = name;
+    document.getElementById('productPrice').textContent = '$' + price;
 
-  // Size select function
-  function selectSize(btn) {
-    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedSize = btn.textContent;
-  }
-
-  // Add to cart button
-  document.getElementById('addToCartBtn').addEventListener('click', () => {
-    if (!selectedSize) {
-      alert("Please select a size before adding to cart!");
-      return;
+    function selectSize(btn) {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedSize = btn.textContent;
     }
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push({
-      name: name + ' (Size ' + selectedSize + ')',
-      price: price,
-      image: img,
-      quantity: 1
-    });
-    localStorage.setItem("cart", JSON.stringify(cart));
 
-    flyToCart(document.getElementById('mainImage'));
-  });
+    function flyToCart(image) {
+      const cartIcon = document.getElementById('cartIcon');
+      const imgClone = image.cloneNode(true);
+      imgClone.classList.add('flying-img');
 
-  // Buy now button
-  document.getElementById('buyNowBtn').addEventListener('click', () => {
-    if (!selectedSize) {
-      alert("Please select a size before buying!");
-      return;
+      const imgRect = image.getBoundingClientRect();
+      imgClone.style.left = imgRect.left + 'px';
+      imgClone.style.top = imgRect.top + 'px';
+      imgClone.style.width = image.offsetWidth + 'px';
+      imgClone.style.height = image.offsetHeight + 'px';
+
+      document.body.appendChild(imgClone);
+
+      const cartRect = cartIcon.getBoundingClientRect();
+      setTimeout(() => {
+        imgClone.style.left = cartRect.left + 'px';
+        imgClone.style.top = cartRect.top + 'px';
+        imgClone.style.width = '20px';
+        imgClone.style.height = '20px';
+        imgClone.style.opacity = '0.5';
+      }, 100);
+
+      setTimeout(() => {
+        imgClone.remove();
+        alert("Product added to cart!");
+      }, 1100);
     }
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push({
-      name: name + ' (Size ' + selectedSize + ')',
-      price: price,
-      image: img,
-      quantity: 1
+
+    // Animated button click effect
+    document.querySelectorAll('.button').forEach(button => {
+      button.addEventListener('click', e => {
+        if (!button.classList.contains('loading')) {
+          button.classList.add('loading');
+          setTimeout(() => button.classList.remove('loading'), 3700);
+        }
+      });
     });
-    localStorage.setItem("cart", JSON.stringify(cart));
-    window.location.href = "./payment.html";
-  });
 
-  // Flying animation function
-  function flyToCart(image) {
-    const cartIcon = document.getElementById('cartIcon');
-    const imgClone = image.cloneNode(true);
-    imgClone.classList.add('flying-img');
+    document.getElementById('addToCartBtn').addEventListener('click', () => {
+      if (!selectedSize) return alert("Please select a size!");
 
-    const imgRect = image.getBoundingClientRect();
-    imgClone.style.left = imgRect.left + 'px';
-    imgClone.style.top = imgRect.top + 'px';
-    imgClone.style.width = image.offsetWidth + 'px';
-    imgClone.style.height = image.offsetHeight + 'px';
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ name: name + ` (Size ${selectedSize})`, price, image: img, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      flyToCart(document.getElementById('mainImage'));
+    });
 
-    document.body.appendChild(imgClone);
+    document.getElementById('buyNowBtn').addEventListener('click', () => {
+      if (!selectedSize) return alert("Please select a size!");
 
-    const cartRect = cartIcon.getBoundingClientRect();
-    setTimeout(() => {
-      imgClone.style.left = cartRect.left + 'px';
-      imgClone.style.top = cartRect.top + 'px';
-      imgClone.style.width = '20px';
-      imgClone.style.height = '20px';
-      imgClone.style.opacity = '0.5';
-    }, 100);
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ name: name + ` (Size ${selectedSize})`, price, image: img, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      window.location.href = "payment.html";
+    });
+  </script>
 
-    setTimeout(() => {
-      imgClone.remove();
-      alert("Product added to cart!");
-    }, 1100);
-  }
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
