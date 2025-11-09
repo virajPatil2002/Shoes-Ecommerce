@@ -4,69 +4,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Detail - Vshoestore</title>
+  <title>Product Details | Vshoestore</title>
+
+  <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
+      background-color: #f4f6f8;
+      color: #212529;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* Cart Icon */
+    .cart-icon {
+      position: fixed;
+      top: 20px;
+      right: 25px;
+      background: #0d6efd;
+      color: #fff;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .cart-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* Product Section */
+    .product-container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
     }
 
     .product-main-img {
       width: 100%;
-      max-width: 450px;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      max-width: 420px;
+      border-radius: 14px;
+      transition: transform 0.4s ease;
+    }
+
+    .product-main-img:hover {
+      transform: scale(1.03);
     }
 
     .size-btn {
       margin: 5px;
       padding: 8px 14px;
-      border: 1px solid #ddd;
+      border: 1px solid #ced4da;
       border-radius: 6px;
-      cursor: pointer;
       background-color: #fff;
+      cursor: pointer;
       transition: all 0.3s ease;
+      font-weight: 500;
     }
 
     .size-btn:hover {
-      background-color: #f1f1f1;
+      background-color: #e9ecef;
     }
 
     .size-btn.active {
-      background-color: #007bff;
+      background-color: #0d6efd;
       color: #fff;
-      border-color: #007bff;
+      border-color: #0d6efd;
     }
 
+    /* Buy Now Button */
     .btn-buy {
-      background: #28a745;
+      background: #198754;
       color: #fff;
       border-radius: 30px;
       padding: 0.6rem 1.4rem;
       font-weight: 600;
       border: none;
+      transition: all 0.3s ease;
     }
 
     .btn-buy:hover {
-      background: #1e7e34;
+      background: #146c43;
+      transform: translateY(-1px);
     }
 
-    .cart-icon {
-      position: fixed;
-      top: 20px;
-      right: 25px;
-      background: #007bff;
+    /* Add to Cart Animated Button */
+    .button {
+      position: relative;
+      border: none;
+      background: #362A89;
       color: #fff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      z-index: 1000;
+      border-radius: 30px;
+      padding: 0.6rem 1.4rem;
+      font-weight: 600;
+      min-width: 150px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .button:active {
+      transform: scale(0.97);
+    }
+
+    .button span {
+      position: relative;
+      z-index: 2;
+      font-size: 15px;
+    }
+
+    .button.loading {
+      background-color: #281f6b;
     }
 
     .flying-img {
@@ -76,216 +136,66 @@
       pointer-events: none;
     }
 
-    /* ----------------- Animated Button Styles ------------------- */
-    .button {
-      --background: #362A89;
-      --text: #fff;
-      --cart: #fff;
-      --tick: var(--background);
-      position: relative;
-      border: none;
-      background: none;
-      padding: 8px 28px;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      text-align: center;
-      min-width: 144px;
-      color: var(--text);
-      background: var(--background);
-      transform: scale(var(--scale, 1));
-      transition: transform .4s cubic-bezier(.36, 1.01, .32, 1.27);
-    }
-
-    .button:active {
-      --scale: .95;
-    }
-
-    .button span {
-      font-size: 14px;
-      font-weight: 500;
-      display: block;
-      position: relative;
-      padding-left: 24px;
-      margin-left: -8px;
-      line-height: 26px;
-      transform: translateY(var(--span-y, 0));
-      transition: transform .7s ease;
-    }
-
-    .button span:before,
-    .button span:after {
-      content: '';
-      width: var(--w, 2px);
-      height: var(--h, 14px);
-      border-radius: 1px;
-      position: absolute;
-      left: var(--l, 8px);
-      top: var(--t, 6px);
-      background: currentColor;
-      transform: scale(.75) rotate(var(--icon-r, 0deg)) translateY(var(--icon-y, 0));
-      transition: transform .65s ease .05s;
-    }
-
-    .button span:after {
-      --w: 14px;
-      --h: 2px;
-      --l: 2px;
-      --t: 12px;
-    }
-
-    .button .cart {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin: -13px 0 0 -18px;
-      transform-origin: 12px 23px;
-      transform: translateX(-120px) rotate(-18deg);
-    }
-
-    .button .cart:before,
-    .button .cart:after {
-      content: '';
-      position: absolute;
-    }
-
-    .button .cart:before {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      box-shadow: inset 0 0 0 2px var(--cart);
-      bottom: 0;
-      left: 9px;
-      filter: drop-shadow(11px 0 0 var(--cart));
-    }
-
-    .button .cart:after {
-      width: 16px;
-      height: 9px;
-      background: var(--cart);
-      left: 9px;
-      bottom: 7px;
-      transform-origin: 50% 100%;
-      transform: perspective(4px) rotateX(-6deg) scaleY(var(--fill, 0));
-      transition: transform 1.2s ease var(--fill-d);
-    }
-
-    .button .cart svg {
-      z-index: 1;
-      width: 36px;
-      height: 26px;
-      display: block;
-      position: relative;
-      fill: none;
-      stroke: var(--cart);
-      stroke-width: 2px;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .button.loading {
-      --scale: .95;
-      --span-y: -32px;
-      --icon-r: 180deg;
-      --fill: 1;
-      --fill-d: .8s;
-      --offset: 0;
-      --offset-d: 1.73s;
-    }
-
-    .button.loading .cart {
-      animation: cart 3.4s linear forwards .2s;
-    }
-
-    @keyframes cart {
-      12.5% {
-        transform: translateX(-60px) rotate(-18deg);
-      }
-
-      25%,
-      45%,
-      55%,
-      75% {
-        transform: none;
-      }
-
-      50% {
-        transform: scale(.9);
-      }
-
-      44%,
-      56% {
-        transform-origin: 12px 23px;
-      }
-
-      45%,
-      55% {
-        transform-origin: 50% 50%;
-      }
-
-      87.5% {
-        transform: translateX(70px) rotate(-18deg);
-      }
-
-      100% {
-        transform: translateX(140px) rotate(-18deg);
-      }
+    .price-tag {
+      color: #0d6efd;
+      font-weight: 600;
+      font-size: 1.4rem;
     }
   </style>
 </head>
 
 <body>
-
-
+  <!-- Floating Cart Icon -->
   <div class="cart-icon" id="cartIcon">
     <i class="fa fa-shopping-cart"></i>
   </div>
 
+  <!-- Main Section -->
   <div class="container py-5">
-    <a href="product.html" class="btn btn-secondary mb-4"><i class="fa fa-arrow-left me-2"></i>Back to Products</a>
+    <a href="product.html" class="btn btn-outline-secondary mb-4">
+      <i class="fa fa-arrow-left me-2"></i>Back to Products
+    </a>
 
-    <div class="row g-5 align-items-center">
-      <div class="col-md-6 text-center">
-        <img id="mainImage" src="" alt="Product" class="product-main-img mb-3">
-      </div>
-      <div class="col-md-6">
-        <h2 id="productName" class="fw-bold"></h2>
-        <h4 id="productPrice" class="text-primary mb-3"></h4>
-
-        <h6 class="fw-bold">Select Size</h6>
-        <div class="mb-3">
-          <button class="size-btn" onclick="selectSize(this)">6</button>
-          <button class="size-btn" onclick="selectSize(this)">7</button>
-          <button class="size-btn" onclick="selectSize(this)">8</button>
-          <button class="size-btn" onclick="selectSize(this)">9</button>
-          <button class="size-btn" onclick="selectSize(this)">10</button>
+    <div class="product-container">
+      <div class="row g-5 align-items-center">
+        <div class="col-md-6 text-center">
+          <img id="mainImage" src="" alt="Product" class="product-main-img mb-3">
         </div>
 
-        <div class="d-flex gap-3 mt-4">
-         
-          <button class="button" id="addToCartBtn">
-            <span>Add to Cart</span>
-            <div class="cart">
-              <svg viewBox="0 0 36 26">
-                <polyline points="1 1, 6 1, 8 8, 30 8, 34 18, 8 18"></polyline>
-                <polyline points="10 22, 14 26, 26 14"></polyline>
-              </svg>
-            </div>
-          </button>
+        <div class="col-md-6">
+          <h2 id="productName" class="fw-bold mb-2"></h2>
+          <div id="productPrice" class="price-tag mb-3"></div>
 
-          <button class="btn-buy" id="buyNowBtn"><i class="fa fa-bolt me-2"></i>Buy Now</button>
+          <h6 class="fw-bold mb-2">Select Size</h6>
+          <div class="mb-3">
+            <button class="size-btn" onclick="selectSize(this)">6</button>
+            <button class="size-btn" onclick="selectSize(this)">7</button>
+            <button class="size-btn" onclick="selectSize(this)">8</button>
+            <button class="size-btn" onclick="selectSize(this)">9</button>
+            <button class="size-btn" onclick="selectSize(this)">10</button>
+          </div>
+
+          <div class="d-flex gap-3 mt-4">
+            <button class="button" id="addToCartBtn">
+              <span>Add to Cart</span>
+            </button>
+
+            <button class="btn-buy" id="buyNowBtn">
+              <i class="fa fa-bolt me-2"></i>Buy Now
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Script -->
   <script>
     let selectedSize = null;
-
     const params = new URLSearchParams(window.location.search);
     const name = params.get('name') || 'Product Name';
     const price = params.get('price') || '0';
-    const img = params.get('img') || 'https://via.placeholder.com/450x450.png?text=Shoesimages';
+    const img = params.get('img') || 'https://via.placeholder.com/450x450.png?text=Shoes+Image';
 
     document.getElementById('mainImage').src = img;
     document.getElementById('productName').textContent = name;
@@ -307,16 +217,15 @@
       imgClone.style.top = imgRect.top + 'px';
       imgClone.style.width = image.offsetWidth + 'px';
       imgClone.style.height = image.offsetHeight + 'px';
-
       document.body.appendChild(imgClone);
 
       const cartRect = cartIcon.getBoundingClientRect();
       setTimeout(() => {
         imgClone.style.left = cartRect.left + 'px';
         imgClone.style.top = cartRect.top + 'px';
-        imgClone.style.width = '20px';
-        imgClone.style.height = '20px';
-        imgClone.style.opacity = '0.5';
+        imgClone.style.width = '25px';
+        imgClone.style.height = '25px';
+        imgClone.style.opacity = '0.6';
       }, 100);
 
       setTimeout(() => {
@@ -325,30 +234,18 @@
       }, 1100);
     }
 
-    // Animated button click effect
-    document.querySelectorAll('.button').forEach(button => {
-      button.addEventListener('click', e => {
-        if (!button.classList.contains('loading')) {
-          button.classList.add('loading');
-          setTimeout(() => button.classList.remove('loading'), 3700);
-        }
-      });
-    });
-
     document.getElementById('addToCartBtn').addEventListener('click', () => {
       if (!selectedSize) return alert("Please select a size!");
-
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart.push({ name: name + ` (Size ${selectedSize})`, price, image: img, quantity: 1 });
+      cart.push({ name: `${name} (Size ${selectedSize})`, price, image: img, quantity: 1 });
       localStorage.setItem("cart", JSON.stringify(cart));
       flyToCart(document.getElementById('mainImage'));
     });
 
     document.getElementById('buyNowBtn').addEventListener('click', () => {
       if (!selectedSize) return alert("Please select a size!");
-
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart.push({ name: name + ` (Size ${selectedSize})`, price, image: img, quantity: 1 });
+      cart.push({ name: `${name} (Size ${selectedSize})`, price, image: img, quantity: 1 });
       localStorage.setItem("cart", JSON.stringify(cart));
       window.location.href = "payment.html";
     });
@@ -356,4 +253,5 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
