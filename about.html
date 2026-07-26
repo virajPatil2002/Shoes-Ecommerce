@@ -11,173 +11,413 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./css/style.css">
   <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background-color: #fefefe;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  background-color: #fefefe;
-  color: #333;
-  margin: 0;
-  padding: 0;
-}
+    /* ---------- Hero ---------- */
+    .hero-section {
+      background: linear-gradient(135deg, #7f00ff, #e100ff);
+      background-blend-mode: overlay;
+      color: #fff;
+      padding: 120px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1600&q=80') center/cover;
+      opacity: .18;
+    }
 
-.hero-section {
-background: linear-gradient(135deg, #7f00ff, #e100ff);
-  background-blend-mode: overlay;
-  color: #fff;
-  padding: 120px 0;
-  text-align: center;
-}
+    .hero-section .container-n {
+      position: relative;
+      z-index: 1;
+    }
 
-.hero-section h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  margin-bottom: 20px;
-}
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
 
-.hero-section p {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.9);
-}
+    .hero-section p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
 
-.about-story img {
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
+    .breadcrumb-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, .15);
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: .85rem;
+      margin-bottom: 22px;
+      color: #fff;
+    }
 
-.about-story img:hover {
-  transform: scale(1.05);
-}
+    /* ---------- Story ---------- */
+    .about-story img {
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
 
-.about-story h2 {
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #333;
-}
+    .about-story img:hover {
+      transform: scale(1.05);
+    }
 
-.about-story p {
-  color: #555;
-  margin-bottom: 15px;
-}
+    .about-story h2 {
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #333;
+    }
 
+    .about-story p {
+      color: #555;
+      margin-bottom: 15px;
+    }
 
-.feature-box {
-  background: #fff;
-  border-radius: 15px;
-  padding: 30px 20px;
-  text-align: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-}
+    .badge-since {
+      position: absolute;
+      bottom: -18px;
+      right: -18px;
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
+      color: #fff;
+      border-radius: 50%;
+      width: 110px;
+      height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      text-align: center;
+      line-height: 1.1;
+    }
 
-.feature-box:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-}
+    .badge-since span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      display: block;
+    }
 
-.feature-box img {
-  margin-bottom: 15px;
-}
+    .badge-since small {
+      font-size: .65rem;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
 
-.feature-box h5 {
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 10px;
-}
+    .img-wrap {
+      position: relative;
+    }
 
-.feature-box p {
-  color: #666;
-  font-size: 0.95rem;
-}
+    /* ---------- Stats ---------- */
+    .stats-section {
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
+      color: #fff;
+      padding: 55px 0;
+    }
 
+    .stat-item h3 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
 
-.mission-section {
-  background-color: #f8f9fa;
-  padding: 80px 20px;
-  text-align: center;
-}
+    .stat-item p {
+      color: rgba(255, 255, 255, .85);
+      margin: 0;
+      font-size: .95rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
 
-.mission-section h2 {
-  font-weight: 700;
-  margin-bottom: 25px;
-}
+    /* ---------- Feature boxes ---------- */
+    .feature-box {
+      background: #fff;
+      border-radius: 15px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
 
-.mission-section p {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 30px;
-}
+    .feature-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
 
-.mission-section .btn {
-  padding: 12px 35px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 50px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
+    .feature-box .icon-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7f00ff, #2575fc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      color: #fff;
+      font-size: 1.6rem;
+    }
 
-.mission-section .btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
+    .feature-box h5 {
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+    }
 
+    .feature-box p {
+      color: #666;
+      font-size: 0.95rem;
+      margin: 0;
+    }
 
-.social-section {
-  background-color: #222;
-  color: #fff;
-  padding: 60px 20px;
-  text-align: center;
-}
+    .section-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: .78rem;
+      font-weight: 700;
+      color: #7f00ff;
+      margin-bottom: 8px;
+      display: block;
+    }
 
-.social-section h3 {
-  font-weight: 700;
-  margin-bottom: 20px;
-}
+    .section-title {
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
 
-.social-section p {
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 30px;
-}
+    /* ---------- Timeline ---------- */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-top: 20px;
+    }
 
-.social-section i {
-  font-size: 2rem;
-  margin: 0 15px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, #7f00ff, #2575fc);
+      border-radius: 3px;
+    }
 
-.social-section i:hover {
-  color: #6a11cb;
-  transform: scale(1.2);
-}
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 20px 40px;
+    }
 
+    .timeline-item:nth-child(odd) {
+      left: 0;
+      text-align: right;
+    }
 
-@media (max-width: 991px) {
-  .hero-section h1 {
-    font-size: 2.5rem;
-  }
+    .timeline-item:nth-child(even) {
+      left: 50%;
+      text-align: left;
+    }
 
-  .hero-section p {
-    font-size: 1rem;
-  }
+    .timeline-dot {
+      position: absolute;
+      top: 26px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      border: 4px solid #7f00ff;
+    }
 
-  .feature-box {
-    padding: 25px 15px;
-  }
-}
+    .timeline-item:nth-child(odd) .timeline-dot {
+      right: -9px;
+    }
 
+    .timeline-item:nth-child(even) .timeline-dot {
+      left: -9px;
+    }
+
+    .timeline-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 22px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      display: inline-block;
+    }
+
+    .timeline-year {
+      font-weight: 800;
+      color: #7f00ff;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 767px) {
+      .timeline::before {
+        left: 12px;
+      }
+
+      .timeline-item,
+      .timeline-item:nth-child(even) {
+        width: 100%;
+        left: 0;
+        text-align: left;
+        padding-left: 40px;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-dot,
+      .timeline-item:nth-child(even) .timeline-dot {
+        left: 3px;
+        right: auto;
+      }
+    }
+
+    /* ---------- Team ---------- */
+    .team-card {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: transform .3s ease, box-shadow .3s ease;
+      height: 100%;
+    }
+
+    .team-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    .team-card .team-info {
+      padding: 18px;
+      text-align: center;
+    }
+
+    .team-card h5 {
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .team-card .role {
+      color: #7f00ff;
+      font-size: .85rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .team-social a {
+      color: #999;
+      margin: 0 6px;
+      transition: color .2s ease;
+    }
+
+    .team-social a:hover {
+      color: #7f00ff;
+    }
+
+    /* ---------- Testimonials ---------- */
+    .testimonial-card {
+      background: #fff;
+      border-radius: 15px;
+      padding: 28px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      height: 100%;
+    }
+
+    .testimonial-card .stars {
+      color: #ffb400;
+      margin-bottom: 12px;
+    }
+
+    .testimonial-card p {
+      color: #555;
+      font-style: italic;
+    }
+
+    .testimonial-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .testimonial-user img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .testimonial-user h6 {
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .testimonial-user small {
+      color: #888;
+    }
+
+    /* ---------- Mission ---------- */
+    .mission-section {
+      background-color: #f8f9fa;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .mission-section h2 {
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+
+    .mission-section p {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .mission-section .btn {
+      padding: 12px 35px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .mission-section .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
   </style>
 </head>
 
 <body>
-   <header>
+  <header>
     <nav class="navbar navbar-expand-lg rounded shadow" style="background: linear-gradient(90deg, #6a11cb, #2575fc);
 ">
       <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-white" href="#">Vshoestore</a>
+        <a class="navbar-brand fw-bold text-white" href="./index.html"><i
+            class="fa-solid fa-shoe-prints me-2"></i>Vshoestore</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
           aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -188,121 +428,490 @@ background: linear-gradient(135deg, #7f00ff, #e100ff);
 
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active text-white" href="./index.html">Home</a>
+              <a class="nav-link text-white" href="./index.html">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="./product.html">Product</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="./about.html">About</a>
+              <a class="nav-link active text-white" href="./about.html">About</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="./contact.html">Contact</a>
             </li>
-
-
           </ul>
 
-        <div class="mx-3 d-none d-md-block">
-  <i class="fa-solid fa-magnifying-glass fs-5 text-white" id="searchIcon" style="cursor:pointer;"></i>
-</div>
-
-<input 
-  type="text" 
-  id="searchInput" 
-  class="form-control mt-2 d-none d-md-block" 
-  placeholder="Search here..." 
-  style="display:none; max-width:250px;"
->
-
-
-<div class="dropdown position-relative mx-3 d-none d-md-block">
-  <a 
-    href="#" 
-    id="cartDropdownToggle"
-    class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
-    data-bs-toggle="dropdown" 
-    aria-expanded="false"
-  >
-    <i class="fa-solid fa-cart-shopping fs-5"></i>
-    <span 
-      class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill" 
-      id="cartCount"
-    >2</span>
-  </a>
-
-  <ul class="dropdown-menu dropdown-menu-end text-small p-3" id="cartDropdownMenu" style="min-width: 300px;">
-    <h6 class="dropdown-header">Your Orders</h6>
-    <div id="cartDropdownItems"></div>
-    <div class="mt-2">
-      <a href="order.html" class="btn btn-primary w-100">View All Orders</a>
-    </div>
-  </ul>
-</div>
-
-
-            <div class="dropdown" id="profile-container" style="display: none;">
-              <a href="#" id="profileDropdown"
-                class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-regular fa-user fs-5"></i>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end text-small">
-                <li>
-                  <h6 class="dropdown-header" id="user-name">Guest</h6>
-                </li>
-                <li><a class="dropdown-item" href="#">My Profile</a></li>
-                <li><a class="dropdown-item" href="place.html">Orders</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
-              </ul>
-            </div>
-
-            <a href="./login.html" id="login-link">
-              <button type="button" class="btn btn-danger px-3">
-                Login
-              </button>
-            </a>
+          <div class="mx-3 d-none d-md-block">
+            <i class="fa-solid fa-magnifying-glass fs-5 text-white" id="searchIcon" style="cursor:pointer;"></i>
           </div>
+
+          <input type="text" id="searchInput" class="form-control mt-2 d-none d-md-block" placeholder="Search here..."
+            style="display:none; max-width:250px;">
+
+          <div class="dropdown position-relative mx-3 d-none d-md-block">
+            <a href="#" id="cartDropdownToggle"
+              class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-cart-shopping fs-5"></i>
+              <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill"
+                id="cartCount">0</span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end text-small p-3" id="cartDropdownMenu" style="min-width: 300px;">
+              <h6 class="dropdown-header">Your Orders</h6>
+              <div id="cartDropdownItems"></div>
+              <div class="mt-2">
+                <a href="addcart.html" class="btn btn-primary w-100">View All Orders</a>
+              </div>
+            </ul>
+          </div>
+
+          <div class="dropdown" id="profile-container" style="display: none;">
+            <a href="#" id="profileDropdown"
+              class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user fs-5"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end text-small">
+              <li>
+                <h6 class="dropdown-header" id="user-name">Guest</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">My Profile</a></li>
+              <li><a class="dropdown-item" href="place.html">Orders</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </div>
+
+          <a href="./login.html" id="login-link">
+            <button type="button" class="btn btn-danger px-3">
+              Login
+            </button>
+          </a>
         </div>
       </div>
     </nav>
   </header>
 
+  <!-- ================= HERO ================= -->
+  <section class="hero-section text-center shadow rounded">
+    <div class="container-n">
+      <h1>About StepUp Shoes</h1>
+      <p>Where performance meets style – every step of the way.</p>
+    </div>
+  </section>
 
+  <!-- ================= OUR STORY ================= -->
+  <section class="py-5 about-story">
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-6">
+          <div class="img-wrap">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80"
+              class="img-fluid rounded shadow" alt="About StepUp Shoes">
+            <div class="badge-since"><span>2015</span><small>Since</small></div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="section-eyebrow">Our Story</span>
+          <h2 class="fw-bold mb-3">Crafted for every stride</h2>
+          <p class="mb-3">
+            At <strong>StepUp Shoes</strong>, we believe that footwear is more than just a necessity—it's a companion on
+            every journey you take. Guided by our passion for innovation and craftsmanship, we create shoes that embody
+            the perfect balance of <em>comfort, durability, and style</em>. Whether you are sprinting on marathon
+            tracks, exploring rugged trails, or simply walking through the hustle of everyday streets, our shoes are
+            engineered to support and empower every step you take with confidence.
+          </p>
 
+          <p class="mb-3">
+            Established with a vision to revolutionize the footwear industry, <strong>StepUp Shoes</strong> seamlessly
+            blends cutting-edge technology with premium materials to deliver products that stand the test of time. Our
+            designs are not only trend-forward but also purpose-driven—tailored to meet the unique demands of athletes
+            striving for peak performance, adventurers seeking resilience, and fashion enthusiasts who value style
+            without compromise.
+          </p>
 
+          <p class="mb-0">
+            Every pair we create reflects our commitment to quality and innovation, ensuring that when you wear StepUp,
+            you don't just wear shoes—you experience a lifestyle of <em>movement, confidence, and expression</em>. With
+            StepUp Shoes, every step leads to new possibilities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ================= STATS ================= -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="row text-center g-4">
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <h3 data-count="120000">0</h3>
+            <p>Happy Customers</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <h3 data-count="350">0</h3>
+            <p>Shoe Styles</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <h3 data-count="45">0</h3>
+            <p>Countries Shipped</p>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-item">
+            <h3 data-count="10">0</h3>
+            <p>Years of Trust</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES ================= -->
+  <section class="py-5 bg-white">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="section-eyebrow">Why Choose Us</span>
+        <h2 class="section-title">Built for people who move</h2>
+      </div>
+      <div class="row text-center g-4">
+
+        <div class="col-md-3 col-sm-6">
+          <div class="feature-box">
+            <div class="icon-circle"><i class="fa-solid fa-medal"></i></div>
+            <h5>Premium Quality</h5>
+            <p>Built with the finest, long-lasting materials to ensure durability, strength, and value in every pair.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <div class="feature-box">
+            <div class="icon-circle"><i class="fa-solid fa-shoe-prints"></i></div>
+            <h5>Ultimate Comfort</h5>
+            <p>Soft cushioning, breathable fabrics, and ergonomic design give you comfort that lasts all day.</p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <div class="feature-box">
+            <div class="icon-circle"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <h5>Modern Style</h5>
+            <p>Stay ahead of trends with stylish, versatile designs that elevate every outfit and occasion.</p>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+          <div class="feature-box">
+            <div class="icon-circle"><i class="fa-solid fa-truck-fast"></i></div>
+            <h5>Fast Delivery</h5>
+            <p>With our trusted logistics network, your shoes arrive quickly, securely, and right on time.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TIMELINE ================= -->
+  <section class="py-5" style="background:#f8f9fa;">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="section-eyebrow">Our Journey</span>
+        <h2 class="section-title">Milestones along the way</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-year">2015</div>
+            <p class="mb-0">StepUp Shoes founded with a single store and a big dream.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-year">2018</div>
+            <p class="mb-0">Launched our first performance running line, sold in 10+ countries.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-year">2021</div>
+            <p class="mb-0">Crossed 100,000 happy customers and opened our online store.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-year">2024</div>
+            <p class="mb-0">Introduced eco-friendly materials across our entire shoe range.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TEAM ================= -->
+  <section class="py-5 bg-white">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="section-eyebrow">The People Behind It</span>
+        <h2 class="section-title">Meet our team</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&q=80" alt="Team member">
+            <div class="team-info">
+              <h5>Aditi Sharma</h5>
+              <p class="role">Founder &amp; CEO</p>
+              <div class="team-social">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&q=80" alt="Team member">
+            <div class="team-info">
+              <h5>Rohan Mehta</h5>
+              <p class="role">Head of Design</p>
+              <div class="team-social">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-dribbble"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&q=80" alt="Team member">
+            <div class="team-info">
+              <h5>Neha Kapoor</h5>
+              <p class="role">Operations Lead</p>
+              <div class="team-social">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&q=80" alt="Team member">
+            <div class="team-info">
+              <h5>Karan Verma</h5>
+              <p class="role">Marketing Head</p>
+              <div class="team-social">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section class="py-5" style="background:#f8f9fa;">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="section-eyebrow">Customer Love</span>
+        <h2 class="section-title">What our customers say</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="stars">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p>"Best running shoes I've owned. Lightweight, comfortable, and they actually last."</p>
+            <div class="testimonial-user">
+              <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=100&q=80" alt="Customer">
+              <div>
+                <h6>Priya N.</h6>
+                <small>Verified Buyer</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="stars">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <p>"Delivery was super fast and the quality feels premium for the price. Highly recommend."</p>
+            <div class="testimonial-user">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Customer">
+              <div>
+                <h6>Arjun S.</h6>
+                <small>Verified Buyer</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="stars">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p>"Stylish enough for everyday wear and sturdy enough for hiking. My go-to brand now."</p>
+            <div class="testimonial-user">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Customer">
+              <div>
+                <h6>Meera J.</h6>
+                <small>Verified Buyer</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MISSION ================= -->
+  <section class="mission-section text-center">
+    <div class="container">
+      <span class="section-eyebrow">Our Mission</span>
+      <h2 class="fw-bold mb-4">Our Mission</h2>
+      <p class="lead mb-4">
+        To inspire movement and self-expression through innovative, stylish, and comfortable footwear.
+      </p>
+      <a href="product.html" class="btn btn-warning btn-lg fw-semibold shadow-sm">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- ================= SOCIAL ================= -->
+  <section class="social-section">
+    <div class="container-f">
+      <h3 class="fw-bold mb-3">Join the StepUp Community</h3>
+      <p class="text-white-50 mb-4">Follow us for the latest drops, style tips, and exclusive offers.</p>
+      <i class="fa-brands fa-instagram fs-3"></i>
+      <i class="fa-brands fa-facebook fs-3"></i>
+      <i class="fa-brands fa-twitter fs-4"></i>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <h6 class="text-white fs-5"><i class="fa-solid fa-shoe-prints me-2"></i>StepUp Shoes</h6>
+          <p class="small">Performance meets style — footwear engineered to support every step of your journey.</p>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h6>Shop</h6>
+          <a href="./product.html">All Products</a>
+          <a href="#">New Arrivals</a>
+          <a href="#">Best Sellers</a>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h6>Company</h6>
+          <a href="./about.html">About Us</a>
+          <a href="./contact.html">Contact</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h6>Support</h6>
+          <a href="#">Shipping Info</a>
+          <a href="#">Returns</a>
+          <a href="#">FAQs</a>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h6>Follow Us</h6>
+          <div>
+            <a href="#" class="d-inline-block me-2"><i class="fa-brands fa-instagram fs-5"></i></a>
+            <a href="#" class="d-inline-block me-2"><i class="fa-brands fa-facebook fs-5"></i></a>
+            <a href="#" class="d-inline-block"><i class="fa-brands fa-twitter fs-5"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <p class="text-center small mb-0">&copy; 2026 StepUp Shoes. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const loginLink = document.getElementById("login-link");
       const profileContainer = document.getElementById("profile-container");
       const userNameEl = document.getElementById("user-name");
 
-
       let loggedInUser = JSON.parse(localStorage.getItem("user"));
 
       if (loggedInUser) {
-
         profileContainer.style.display = "block";
         loginLink.style.display = "none";
         userNameEl.textContent = `${loggedInUser.firstName} ${loggedInUser.lastName}`;
       } else {
-
         profileContainer.style.display = "none";
         loginLink.style.display = "block";
       }
-
 
       const logoutBtn = document.getElementById("logoutBtn");
       logoutBtn.addEventListener("click", () => {
         localStorage.removeItem("user");
         window.location.reload();
       });
+
+      // Search icon toggle
+      const searchIcon = document.getElementById("searchIcon");
+      const searchInput = document.getElementById("searchInput");
+      if (searchIcon && searchInput) {
+        searchIcon.addEventListener("click", () => {
+          searchInput.style.display = searchInput.style.display === "none" ? "block" : "none";
+          if (searchInput.style.display === "block") searchInput.focus();
+        });
+      }
+
+      // Animated stat counters
+      const statEls = document.querySelectorAll('[data-count]');
+      const animateCount = (el) => {
+        const target = parseInt(el.dataset.count, 10);
+        const duration = 1500;
+        const start = performance.now();
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const value = Math.floor(progress * target);
+          el.textContent = value.toLocaleString('en-IN') + (progress === 1 ? '+' : '');
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      };
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              animateCount(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.4 });
+        statEls.forEach(el => observer.observe(el));
+      } else {
+        statEls.forEach(animateCount);
+      }
     });
- const cartCount = document.getElementById("cartCount");
+
+    const cartCount = document.getElementById("cartCount");
     const cartDropdownItems = document.getElementById("cartDropdownItems");
 
     function updateCartDropdown() {
@@ -310,12 +919,12 @@ background: linear-gradient(135deg, #7f00ff, #e100ff);
       cartCount.textContent = cart.length;
       cartDropdownItems.innerHTML = "";
 
-      if(cart.length === 0){
+      if (cart.length === 0) {
         cartDropdownItems.innerHTML = '<p class="text-center mb-0">Cart is empty</p>';
         return;
       }
 
-      cart.forEach((item,index)=>{
+      cart.forEach((item, index) => {
         const div = document.createElement("div");
         div.className = "dropdown-cart-item d-flex align-items-center justify-content-between";
         div.innerHTML = `
@@ -333,26 +942,23 @@ background: linear-gradient(135deg, #7f00ff, #e100ff);
           </div>
         `;
 
-        // Increment
-        div.querySelector(".btn-success").addEventListener("click", ()=>{
-          item.quantity +=1;
-          localStorage.setItem("cart",JSON.stringify(cart));
+        div.querySelector(".btn-success").addEventListener("click", () => {
+          item.quantity += 1;
+          localStorage.setItem("cart", JSON.stringify(cart));
           updateCartDropdown();
         });
 
-        // Decrement
-        div.querySelector(".btn-warning").addEventListener("click", ()=>{
-          if(item.quantity>1){
-            item.quantity -=1;
-            localStorage.setItem("cart",JSON.stringify(cart));
+        div.querySelector(".btn-warning").addEventListener("click", () => {
+          if (item.quantity > 1) {
+            item.quantity -= 1;
+            localStorage.setItem("cart", JSON.stringify(cart));
             updateCartDropdown();
           }
         });
 
-        // Remove
-        div.querySelector(".btn-danger").addEventListener("click", ()=>{
-          cart.splice(index,1);
-          localStorage.setItem("cart",JSON.stringify(cart));
+        div.querySelector(".btn-danger").addEventListener("click", () => {
+          cart.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(cart));
           updateCartDropdown();
         });
 
@@ -360,9 +966,8 @@ background: linear-gradient(135deg, #7f00ff, #e100ff);
       });
     }
 
-    // Add to Cart button
-    document.querySelectorAll(".btn-cart").forEach(btn=>{
-      btn.addEventListener("click",e=>{
+    document.querySelectorAll(".btn-cart").forEach(btn => {
+      btn.addEventListener("click", e => {
         e.preventDefault();
         const product = e.target.closest(".product-card");
         const name = product.dataset.name;
@@ -370,22 +975,21 @@ background: linear-gradient(135deg, #7f00ff, #e100ff);
         const image = product.dataset.img;
 
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existingItem = cart.find(i=>i.name===name);
-        if(existingItem){
-          existingItem.quantity +=1;
-        }else{
-          cart.push({name,price,image,quantity:1});
+        const existingItem = cart.find(i => i.name === name);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({ name, price, image, quantity: 1 });
         }
 
-        localStorage.setItem("cart",JSON.stringify(cart));
+        localStorage.setItem("cart", JSON.stringify(cart));
         updateCartDropdown();
         alert(`${name} added to cart`);
       });
     });
 
-  
-    document.querySelectorAll(".btn-buy").forEach(btn=>{
-      btn.addEventListener("click",e=>{
+    document.querySelectorAll(".btn-buy").forEach(btn => {
+      btn.addEventListener("click", e => {
         e.preventDefault();
         const product = e.target.closest(".product-card");
         const name = product.dataset.name;
@@ -397,120 +1001,6 @@ background: linear-gradient(135deg, #7f00ff, #e100ff);
 
     updateCartDropdown();
   </script>
-
-  <section class="hero-section text-center shadow rounded">
-    <div class="container-n ">
-      <h1>About StepUp Shoes</h1>
-      <p>Where performance meets style – every step of the way.</p>
-    </div>
-  </section>
-
-  <section class="py-5">
-    <div class="container">
-      <div class="row align-items-center gy-4">
-        <div class="col-lg-6">
-          <img src="./images/top.jpeg" class="img-fluid rounded shadow" alt="About StepUp Shoes">
-        </div>
-        <div class="col-lg-6">
-          <h2 class="fw-bold mb-3">Our Story</h2>
-          <p class="mb-3">
-            At <strong>StepUp Shoes</strong>, we believe that footwear is more than just a necessity—it’s a companion on
-            every journey you take. Guided by our passion for innovation and craftsmanship, we create shoes that embody
-            the perfect balance of <em>comfort, durability, and style</em>. Whether you are sprinting on marathon
-            tracks, exploring rugged trails, or simply walking through the hustle of everyday streets, our shoes are
-            engineered to support and empower every step you take with confidence.
-          </p>
-
-          <p class="mb-3">
-            Established with a vision to revolutionize the footwear industry, <strong>StepUp Shoes</strong> seamlessly
-            blends cutting-edge technology with premium materials to deliver products that stand the test of time. Our
-            designs are not only trend-forward but also purpose-driven—tailored to meet the unique demands of athletes
-            striving for peak performance, adventurers seeking resilience, and fashion enthusiasts who value style
-            without compromise.
-          </p>
-
-          <p class="mb-3">
-            Every pair we create reflects our commitment to quality and innovation, ensuring that when you wear StepUp,
-            you don’t just wear shoes—you experience a lifestyle of <em>movement, confidence, and expression</em>. With
-            StepUp Shoes, every step leads to new possibilities.
-          </p>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-5 bg-white">
-    <div class="container ">
-      <div class="row text-center g-4">
-
-        <div class="col-md-3">
-          <div class="feature-box p-3 shadow-sm rounded">
-            <img
-              src="https://img.freepik.com/free-vector/premium-certified-quality-stamp_78370-1800.jpg?semt=ais_hybrid&w=740"
-              alt="Premium Quality" width="75" class="mb-3">
-            <h5>Premium Quality</h5>
-            <p>Built with the finest, long-lasting materials to ensure durability, strength, and value in every pair.
-            </p>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="feature-box p-3 shadow-sm rounded">
-            <img
-              src="https://cdn.vectorstock.com/i/500p/97/54/colorful-cartoon-drawing-of-a-sport-shoe-vector-55339754.jpg"
-              alt="Ultimate Comfort" width="100" class="mb-3">
-            <h5>Ultimate Comfort</h5>
-            <p>Soft cushioning, breathable fabrics, and ergonomic design give you comfort that lasts all day.</p>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="feature-box p-3 shadow-sm rounded">
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/025/268/536/non_2x/a-comfortable-shoe-showing-sneakers-in-modern-style-ready-to-use-icon-vector.jpg"
-              alt="Modern Style" width="100" class="mb-3">
-            <h5>Modern Style</h5>
-            <p>Stay ahead of trends with stylish, versatile designs that elevate every outfit and occasion.</p>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="feature-box p-3 shadow-sm rounded">
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/035/164/248/non_2x/truck-and-flames-silhouette-fast-delivery-icon-design-express-fast-moving-shipping-delivery-logo-illustration-vector.jpg"
-              alt="Fast Delivery" width="100" class="mb-3">
-            <h5>Fast Delivery</h5>
-            <p>With our trusted logistics network, your shoes arrive quickly, securely, and right on time.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <section class="mission-section text-center">
-    <div class="container">
-      <h2 class="fw-bold mb-4">Our Mission</h2>
-      <p class="lead mb-4">
-        To inspire movement and self-expression through innovative, stylish, and comfortable footwear.
-      </p>
-      <a href="shop.html" class="btn btn-warning btn-lg fw-semibold shadow-sm">Shop Now</a>
-    </div>
-  </section>
-
-  <section class="py-5 bg-dark text-white text-center">
-    <div class="container-f ">
-      <h3 class="fw-bold mb-3">Join the StepUp Community</h3>
-      <p class="text-white-50 mb-4">Follow us for the latest drops, style tips, and exclusive offers.</p>
-      <i class="fa-brands fa-instagram fs-3"></i>
-      <i class="fa-brands fa-facebook fs-3"></i>
-      <i class="fa-brands fa-twitter fs-4"></i>
-    </div>
-  </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

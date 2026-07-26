@@ -12,12 +12,14 @@
   <link rel="stylesheet" href="./css/style.css">
 
 </head>
+
 <body>
-   <header>
+  <header>
     <nav class="navbar navbar-expand-lg rounded shadow" style="background: linear-gradient(90deg, #6a11cb, #2575fc);
 ">
       <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-white" href="#">Vshoestore</a>
+        <a class="navbar-brand fw-bold text-white" href="./index.html"><i
+            class="fa-solid fa-shoe-prints me-2"></i>Vshoestore</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
           aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,92 +30,72 @@
 
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active text-white" href="./index.html">Home</a>
+              <a class="nav-link text-white" href="./index.html">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="./product.html">Product</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="./about.html">About</a>
+              <a class="nav-link active text-white" href="./about.html">About</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="./contact.html">Contact</a>
             </li>
-
-
           </ul>
 
-        <div class="mx-3 d-none d-md-block">
-  <i class="fa-solid fa-magnifying-glass fs-5 text-white" id="searchIcon" style="cursor:pointer;"></i>
-</div>
-
-<input 
-  type="text" 
-  id="searchInput" 
-  class="form-control mt-2 d-none d-md-block" 
-  placeholder="Search here..." 
-  style="display:none; max-width:250px;"
->
-
-
-<div class="dropdown position-relative mx-3 d-none d-md-block">
-  <a 
-    href="#" 
-    id="cartDropdownToggle"
-    class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
-    data-bs-toggle="dropdown" 
-    aria-expanded="false"
-  >
-    <i class="fa-solid fa-cart-shopping fs-5"></i>
-    <span 
-      class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill" 
-      id="cartCount"
-    >2</span>
-  </a>
-
-  <ul class="dropdown-menu dropdown-menu-end text-small p-3" id="cartDropdownMenu" style="min-width: 300px;">
-    <h6 class="dropdown-header">Your Orders</h6>
-    <div id="cartDropdownItems"></div>
-    <div class="mt-2">
-      <a href="order.html" class="btn btn-primary w-100">View All Orders</a>
-    </div>
-  </ul>
-</div>
-
-
-            <div class="dropdown" id="profile-container" style="display: none;">
-              <a href="#" id="profileDropdown"
-                class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-regular fa-user fs-5"></i>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end text-small">
-                <li>
-                  <h6 class="dropdown-header" id="user-name">Guest</h6>
-                </li>
-                <li><a class="dropdown-item" href="#">My Profile</a></li>
-                <li><a class="dropdown-item" href="place.html">Orders</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
-              </ul>
-            </div>
-
-            <a href="./login.html" id="login-link">
-              <button type="button" class="btn btn-danger px-3">
-                Login
-              </button>
-            </a>
+          <div class="mx-3 d-none d-md-block">
+            <i class="fa-solid fa-magnifying-glass fs-5 text-white" id="searchIcon" style="cursor:pointer;"></i>
           </div>
+
+          <input type="text" id="searchInput" class="form-control mt-2 d-none d-md-block" placeholder="Search here..."
+            style="display:none; max-width:250px;">
+
+          <div class="dropdown position-relative mx-3 d-none d-md-block">
+            <a href="#" id="cartDropdownToggle"
+              class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-cart-shopping fs-5"></i>
+              <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill"
+                id="cartCount">0</span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end text-small p-3" id="cartDropdownMenu" style="min-width: 300px;">
+              <h6 class="dropdown-header">Your Orders</h6>
+              <div id="cartDropdownItems"></div>
+              <div class="mt-2">
+                <a href="addcart.html" class="btn btn-primary w-100">View All Orders</a>
+              </div>
+            </ul>
+          </div>
+
+          <div class="dropdown" id="profile-container" style="display: none;">
+            <a href="#" id="profileDropdown"
+              class="d-flex align-items-center text-decoration-none dropdown-toggle text-white"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user fs-5"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end text-small">
+              <li>
+                <h6 class="dropdown-header" id="user-name">Guest</h6>
+              </li>
+              <li><a class="dropdown-item" href="#">My Profile</a></li>
+              <li><a class="dropdown-item" href="place.html">Orders</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </div>
+
+          <a href="./login.html" id="login-link">
+            <button type="button" class="btn btn-danger px-3">
+              Login
+            </button>
+          </a>
         </div>
       </div>
     </nav>
   </header>
-
-
-
-
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -149,12 +131,12 @@
       cartCount.textContent = cart.length;
       cartDropdownItems.innerHTML = "";
 
-      if(cart.length === 0){
+      if (cart.length === 0) {
         cartDropdownItems.innerHTML = '<p class="text-center mb-0">Cart is empty</p>';
         return;
       }
 
-      cart.forEach((item,index)=>{
+      cart.forEach((item, index) => {
         const div = document.createElement("div");
         div.className = "dropdown-cart-item d-flex align-items-center justify-content-between";
         div.innerHTML = `
@@ -173,25 +155,25 @@
         `;
 
         // Increment
-        div.querySelector(".btn-success").addEventListener("click", ()=>{
-          item.quantity +=1;
-          localStorage.setItem("cart",JSON.stringify(cart));
+        div.querySelector(".btn-success").addEventListener("click", () => {
+          item.quantity += 1;
+          localStorage.setItem("cart", JSON.stringify(cart));
           updateCartDropdown();
         });
 
         // Decrement
-        div.querySelector(".btn-warning").addEventListener("click", ()=>{
-          if(item.quantity>1){
-            item.quantity -=1;
-            localStorage.setItem("cart",JSON.stringify(cart));
+        div.querySelector(".btn-warning").addEventListener("click", () => {
+          if (item.quantity > 1) {
+            item.quantity -= 1;
+            localStorage.setItem("cart", JSON.stringify(cart));
             updateCartDropdown();
           }
         });
 
         // Remove
-        div.querySelector(".btn-danger").addEventListener("click", ()=>{
-          cart.splice(index,1);
-          localStorage.setItem("cart",JSON.stringify(cart));
+        div.querySelector(".btn-danger").addEventListener("click", () => {
+          cart.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(cart));
           updateCartDropdown();
         });
 
@@ -200,8 +182,8 @@
     }
 
     // Add to Cart button
-    document.querySelectorAll(".btn-cart").forEach(btn=>{
-      btn.addEventListener("click",e=>{
+    document.querySelectorAll(".btn-cart").forEach(btn => {
+      btn.addEventListener("click", e => {
         e.preventDefault();
         const product = e.target.closest(".product-card");
         const name = product.dataset.name;
@@ -209,22 +191,22 @@
         const image = product.dataset.img;
 
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existingItem = cart.find(i=>i.name===name);
-        if(existingItem){
-          existingItem.quantity +=1;
-        }else{
-          cart.push({name,price,image,quantity:1});
+        const existingItem = cart.find(i => i.name === name);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({ name, price, image, quantity: 1 });
         }
 
-        localStorage.setItem("cart",JSON.stringify(cart));
+        localStorage.setItem("cart", JSON.stringify(cart));
         updateCartDropdown();
         alert(`${name} added to cart`);
       });
     });
 
     // Buy Now button
-    document.querySelectorAll(".btn-buy").forEach(btn=>{
-      btn.addEventListener("click",e=>{
+    document.querySelectorAll(".btn-buy").forEach(btn => {
+      btn.addEventListener("click", e => {
         e.preventDefault();
         const product = e.target.closest(".product-card");
         const name = product.dataset.name;
@@ -235,7 +217,7 @@
     });
 
     updateCartDropdown();
- </script>
+  </script>
 
   <section class="py-5 bg-light">
     <div class="container">

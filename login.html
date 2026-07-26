@@ -2,9 +2,15 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login & Registration</title>
+
+  <!-- ✅ Font Awesome CDN (NO 403 error) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4p1k5t6qfGx9kz4x0Q5Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
     * {
       margin: 0;
@@ -28,12 +34,11 @@
       border-radius: 16px;
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
       padding: 30px;
-      animation: fadeIn .5s ease;
+      animation: fadeIn 0.5s ease;
     }
 
     .tabs {
       display: flex;
-      justify-content: space-between;
       margin-bottom: 25px;
       border-bottom: 2px solid #eee;
     }
@@ -45,7 +50,7 @@
       cursor: pointer;
       font-weight: 600;
       color: #555;
-      transition: .3s;
+      transition: 0.3s;
     }
 
     .tab-btn.active {
@@ -57,28 +62,11 @@
       text-align: center;
       margin-bottom: 22px;
       color: #222;
-      font-weight: 700;
-      font-size: 22px;
     }
 
     .input-group {
       position: relative;
       margin-bottom: 16px;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 12px 12px 12px 40px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      transition: .3s;
-    }
-
-    .input-group input:focus {
-      outline: none;
-      border-color: #2575fc;
-      box-shadow: 0 0 6px rgba(37, 117, 252, 0.3);
     }
 
     .input-group i {
@@ -89,18 +77,29 @@
       color: #999;
     }
 
+    .input-group input {
+      width: 100%;
+      padding: 12px 12px 12px 40px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #2575fc;
+      box-shadow: 0 0 6px rgba(37, 117, 252, 0.3);
+    }
+
     button {
       width: 100%;
       padding: 12px;
-      margin-top: 8px;
       border: none;
       background: #2575fc;
       color: #fff;
       font-size: 16px;
-      font-weight: 600;
       border-radius: 8px;
       cursor: pointer;
-      transition: .3s;
     }
 
     button:hover {
@@ -111,17 +110,12 @@
       color: red;
       font-size: 13px;
       display: none;
-      margin-bottom: 6px;
-    }
-
-    .forms {
-      position: relative;
-      overflow: hidden;
+      margin-bottom: 8px;
     }
 
     form {
       display: none;
-      animation: fadeSlide .4s ease forwards;
+      animation: fadeSlide 0.4s ease forwards;
     }
 
     form.active {
@@ -136,9 +130,9 @@
 
     .toggle-link a {
       color: #2575fc;
+      font-weight: 600;
       cursor: pointer;
       text-decoration: none;
-      font-weight: 600;
     }
 
     @keyframes fadeIn {
@@ -165,14 +159,13 @@
       }
     }
 
-    @media (max-width:450px) {
+    @media (max-width: 450px) {
       .container {
         width: 100%;
         padding: 20px;
       }
     }
   </style>
-  <script src="https://kit.fontawesome.com/2d323a629b.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -181,86 +174,104 @@
       <div class="tab-btn active" onclick="showTab('login')">Login</div>
       <div class="tab-btn" onclick="showTab('register')">Register</div>
     </div>
-    <div class="forms">
-      <form id="loginForm" class="active">
-        <h2>Welcome Back</h2>
-        <div class="input-group">
-          <i class="fas fa-user-circle"></i>
-          <input type="text" id="loginUsername" placeholder="Username" required>
-        </div>
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-          <input type="password" id="loginPassword" placeholder="Password" required>
-        </div>
-        <p class="error-msg" id="loginError">⚠ Invalid username or password</p>
-        <button type="button" onclick="loginUser()">Login</button>
-        <div class="toggle-link">Don't have an account? <a onclick="showTab('register')">Register</a></div>
-      </form>
-      <form id="registerForm">
-        <h2>Create Account</h2>
-        <div class="input-group">
-          <i class="fas fa-user"></i>
-          <input type="text" id="regFirstName" placeholder="First Name" required>
-        </div>
-        <div class="input-group">
-          <i class="fas fa-user"></i>
-          <input type="text" id="regLastName" placeholder="Last Name" required>
-        </div>
-        <div class="input-group">
-          <i class="fas fa-user-circle"></i>
-          <input type="text" id="regUsername" placeholder="Username" required>
-        </div>
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-          <input type="password" id="regPassword" placeholder="Password" required>
-        </div>
-        <p class="error-msg" id="regError">⚠ Please fill all fields</p>
-        <button type="button" onclick="registerUser()">Register</button>
-        <div class="toggle-link">Already registered? <a onclick="showTab('login')">Login</a></div>
-      </form>
-    </div>
+
+    <form id="loginForm" class="active">
+      <h2>Welcome Back</h2>
+
+      <div class="input-group">
+        <i class="fa-solid fa-user"></i>
+        <input type="text" id="loginUsername" placeholder="Username" required autocomplete="username" />
+      </div>
+
+      <div class="input-group">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password" />
+      </div>
+
+      <p class="error-msg" id="loginError">⚠ Invalid username or password</p>
+
+      <button type="button" onclick="loginUser()">Login</button>
+
+      <div class="toggle-link">
+        Don't have an account? <a onclick="showTab('register')">Register</a>
+      </div>
+    </form>
+
+    <form id="registerForm">
+      <h2>Create Account</h2>
+
+      <div class="input-group">
+        <i class="fa-solid fa-user"></i>
+        <input type="text" id="regFirstName" placeholder="First Name" required />
+      </div>
+
+      <div class="input-group">
+        <i class="fa-solid fa-user"></i>
+        <input type="text" id="regLastName" placeholder="Last Name" required />
+      </div>
+
+      <div class="input-group">
+        <i class="fa-solid fa-user-circle"></i>
+        <input type="text" id="regUsername" placeholder="Username" required autocomplete="username" />
+      </div>
+
+      <div class="input-group">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="regPassword" placeholder="Password" required autocomplete="new-password" />
+      </div>
+
+      <p class="error-msg" id="regError">⚠ Please fill all fields</p>
+
+      <button type="button" onclick="registerUser()">Register</button>
+
+      <div class="toggle-link">
+        Already registered? <a onclick="showTab('login')">Login</a>
+      </div>
+    </form>
   </div>
+
   <script>
     function showTab(tab) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      if (tab === 'login') document.querySelectorAll('.tab-btn')[0].classList.add('active');
-      else document.querySelectorAll('.tab-btn')[1].classList.add('active');
-      document.getElementById('loginForm').classList.remove('active');
-      document.getElementById('registerForm').classList.remove('active');
-      if (tab === 'login') document.getElementById('loginForm').classList.add('active');
-      else document.getElementById('registerForm').classList.add('active');
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      document.querySelectorAll("form").forEach(f => f.classList.remove("active"));
+
+      if (tab === "login") {
+        document.querySelectorAll(".tab-btn")[0].classList.add("active");
+        document.getElementById("loginForm").classList.add("active");
+      } else {
+        document.querySelectorAll(".tab-btn")[1].classList.add("active");
+        document.getElementById("registerForm").classList.add("active");
+      }
     }
+
     function registerUser() {
-      let firstName = document.getElementById("regFirstName").value.trim();
-      let lastName = document.getElementById("regLastName").value.trim();
-      let username = document.getElementById("regUsername").value.trim();
-      let password = document.getElementById("regPassword").value.trim();
-      if (!firstName || !lastName || !username || !password) { document.getElementById("regError").style.display = "block"; return; }
-      document.getElementById("regError").style.display = "none";
-      let existingUser = localStorage.getItem("user");
-      if (existingUser) {
-        alert("User already registered. Please login.");
-        showTab('login');
+      const firstName = regFirstName.value.trim();
+      const lastName = regLastName.value.trim();
+      const username = regUsername.value.trim();
+      const password = regPassword.value.trim();
+
+      if (!firstName || !lastName || !username || !password) {
+        regError.style.display = "block";
         return;
       }
-      let userData = { firstName, lastName, username, password };
-      localStorage.setItem("user", JSON.stringify(userData));
-      alert("Registration successful! Please login.");
-      showTab('login');
+
+      localStorage.setItem("user", JSON.stringify({ firstName, lastName, username, password }));
+      alert("Registration successful!");
+      showTab("login");
     }
+
     function loginUser() {
-      let username = document.getElementById("loginUsername").value.trim();
-      let password = document.getElementById("loginPassword").value.trim();
-      let loginError = document.getElementById("loginError");
-      let user = localStorage.getItem("user");
-      if (user) {
-        let parsedUser = JSON.parse(user);
-        if (parsedUser.username === username && parsedUser.password === password) {
-          loginError.style.display = "none";
-          alert("Login successful!");
-          window.location.href = "index.html";
-        } else loginError.style.display = "block";
-      } else alert("No registered user found. Please register first.");
+      const username = loginUsername.value.trim();
+      const password = loginPassword.value.trim();
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user && user.username === username && user.password === password) {
+        loginError.style.display = "none";
+        alert("Login successful!");
+        window.location.href = "index.html";
+      } else {
+        loginError.style.display = "block";
+      }
     }
   </script>
 </body>
